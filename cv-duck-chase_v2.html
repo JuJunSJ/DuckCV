@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Software Engineer & BIM Engineering Leader Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        duck: {
+                            yellow: '#ffcc00',
+                            orange: '#ff6600',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 6rem;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        /*
+         * Fixed navbar offset.
+         * The navbar is approximately 64px high,
+         * so Tailwind's scroll-mt-24 gives us 96px
+         * of comfortable space above each section.
+         */
+        section {
+            scroll-margin-top: 6rem;
+        }
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 20;
+            touch-action: none;
+        }
+        .canvas-interactive {
+            pointer-events: auto !important;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+        }
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+        }
+        @media print {
+            #canvas-container,
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .glass-card {
+                background: none !important;
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <!-- =========================================================
+         3D PHYSICS & MASCOT BACKGROUND CANVAS
+         ========================================================= -->
+    <div id="canvas-container"></div>
+    <!-- =========================================================
+         NAVIGATION BAR
+         ========================================================= -->
+    <nav id="navbar"
+         class="fixed top-0 left-0 w-full z-50 glass-nav border-b border-slate-200 dark:border-slate-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-900 flex items-center justify-center font-black text-xl shadow-md">
+                        <i class="fa-solid fa-feather text-slate-900"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-tight block leading-none">
+                            Senior Software & BIM Engineer
+                        </span>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-medium">
+                            BIM Tech · Structural Software · AI & Agents
+                        </span>
+                    </div>
+                </div>
+                <!-- Desktop Nav Links -->
+                <div class="hidden lg:flex items-center space-x-1 text-sm font-medium">
+                    <a href="#overview"
+                       class="nav-link px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                        Overview
+                    </a>
+                    <a href="#experience"
+                       class="nav-link px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                        Experience
+                    </a>
+                    <a href="#impact"
+                       class="nav-link px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                        Impact
+                    </a>
+                    <a href="#expertise"
+                       class="nav-link px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                        Expertise
+                    </a>
+                    <a href="#vision"
+                       class="nav-link px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                        Technology Vision
+                    </a>
+                    <a href="#ai-systems"
+                       class="nav-link px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                        AI Engineering
+                    </a>
+                </div>
+                <!-- Right-side Controls -->
+                <div class="flex items-center space-x-2">
+                    <!-- Donut Button -->
+                    <button id="duck-quack-btn"
+                            class="px-3 py-1.5 text-sm font-semibold rounded-lg bg-amber-400 text-slate-900 hover:bg-amber-300 transition-transform active:scale-95 shadow-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-cookie-bite"></i>
+                        <span>Free Donuts</span>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle"
+                            class="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            aria-label="Toggle dark mode">
+                        <i class="fa-solid fa-moon text-lg dark:hidden"></i>
+                        <i class="fa-solid fa-sun text-lg hidden dark:block"></i>
+                    </button>
+                    <!-- Print -->
+                    <button onclick="window.print()"
+                            class="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-print"
+                            title="Print Resume"
+                            aria-label="Print Resume">
+                        <i class="fa-solid fa-print text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- =========================================================
+         MAIN CONTENT
+         ========================================================= -->
+    <main id="main-content"
+          class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28 space-y-24">
+        <!-- =====================================================
+             HERO / OVERVIEW
+             ===================================================== -->
+        <section id="overview"
+                 class="min-h-[85vh] flex flex-col justify-center pt-8 scroll-mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-8 space-y-6">
+                    <!-- Status -->
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                        <span>
+                            Pixel Duck Active • Give It Free Donuts
+                        </span>
+                    </div>
+                    <!-- Profile -->
+                    <div class="flex items-center gap-5">
+                        <img
+                            src="./jussi.junkkarinen.png"
+                            alt="Your Name"
+                            class="w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover border-4 border-white/20 dark:border-slate-700 shadow-lg shrink-0"
+                        >
+                        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                            Senior Software Engineer
+                            <br>
+                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-indigo-500 to-amber-500">
+                                BIM & AEC Technology · Structural Systems · Architecture · AI
+                            </span>
+                        </h1>
+                    </div>
+                    <!-- Main Description -->
+                    <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl font-light leading-relaxed">
+                        12 years of professional software development experience and 10 years in construction, structural engineering and BIM technology. Combines software engineering, engineering-domain expertise, software architecture, technical leadership, cloud systems, data-driven platforms, and emerging AI/agentic technologies.
+                    </p>
+                    <!-- Secondary Description -->
+                    <p class="text-sm text-slate-500 dark:text-slate-400 max-w-2xl">
+                        Proven capability to independently take complex engineering or business problems, determine appropriate solutions, design software architectures, implement, deploy, support users, and coordinate cross-functional teams to deliver end-to-end impact.
+                    </p>
+                </div>
+                <!-- Profile Highlights -->
+                <div class="lg:col-span-4 glass-card p-6 rounded-2xl space-y-4">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        Profile Highlights
+                    </h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                            <span class="text-slate-500 dark:text-slate-400">
+                                Education
+                            </span>
+                            <span class="font-semibold text-right">
+                                B.Eng. Civil Engineering
+                            </span>
+                        </div>
+                        <div class="flex justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                            <span class="text-slate-500 dark:text-slate-400">
+                                A-Insinöörit Tenure
+                            </span>
+                            <span class="font-semibold">
+                                10 Years
+                            </span>
+                        </div>
+                        <div class="flex justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                            <span class="text-slate-500 dark:text-slate-400">
+                                Software Experience
+                            </span>
+                            <span class="font-semibold">
+                                12 Years Professional
+                            </span>
+                        </div>
+                        <div class="flex justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                            <span class="text-slate-500 dark:text-slate-400">
+                                Key Ecosystem
+                            </span>
+                            <span class="font-semibold">
+                                Tekla, Azure, .NET, React
+                            </span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500 dark:text-slate-400">
+                                Eaten Snacks
+                            </span>
+                            <span id="artifact-count"
+                                  class="font-bold text-amber-500 text-base">
+                                0 Items
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =====================================================
+             EXPERIENCE
+             ===================================================== -->
+        <section id="experience"
+                 class="space-y-8 scroll-mt-24">
+            <div>
+                <span class="text-xs font-bold text-sky-500 uppercase tracking-widest">
+                    Professional History
+                </span>
+                <h2 class="text-3xl font-extrabold mt-1">
+                    Experience & Role Responsibilities
+                </h2>
+            </div>
+            <div class="space-y-6 relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 pl-6">
+                <div class="relative group">
+                    <div class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-sky-500 ring-4 ring-slate-50 dark:ring-slate-950"></div>
+                    <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-6 transition-transform group-hover:translate-x-1">
+                        <div class="flex flex-wrap justify-between items-start gap-2">
+                            <div>
+                                <h3 class="text-2xl font-bold">
+                                    Senior BIM Developer
+                                </h3>
+                                <p class="text-sky-600 dark:text-sky-400 font-semibold text-base">
+                                    A-Insinöörit • 10 Years Experience
+                                </p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+                                Current Role
+                            </span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                            Practical responsibilities extend well beyond ordinary BIM development, spanning end-to-end system design, full-stack software development, architectural oversight, technical leadership, project recovery, and customer-facing roadmap strategy.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                            <div class="space-y-2">
+                                <h4 class="text-xs font-bold text-sky-500 uppercase tracking-wider">
+                                    Software Engineering & Tech Stack
+                                </h4>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                    C#, .NET Framework, .NET Core, TypeScript, JavaScript, React, Next.js, Node.js, Python, SQL, Azure, Linux, CI/CD pipelines, database optimization, infrastructure as code, and security compliance.
+                                </p>
+                            </div>
+                            <div class="space-y-2">
+                                <h4 class="text-xs font-bold text-indigo-500 uppercase tracking-wider">
+                                    Architecture & System Evolution
+                                </h4>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                    Designing brand-new software systems while modernizing existing platforms. Architecting reusable core libraries, API-oriented structural engineering platforms, cloud integrations, and data-driven systems.
+                                </p>
+                            </div>
+                            <div class="space-y-2">
+                                <h4 class="text-xs font-bold text-amber-500 uppercase tracking-wider">
+                                    Technical & Project Leadership
+                                </h4>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                    Driving technical decisions, code reviews, developer mentoring, task distribution, development standards, tech stack selection, and advising management. Leading estimations, scheduling, risk management, and turning around delayed or complex projects.
+                                </p>
+                            </div>
+                            <div class="space-y-2">
+                                <h4 class="text-xs font-bold text-emerald-500 uppercase tracking-wider">
+                                    Engineering Domain & BIM Ecosystem
+                                </h4>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                    Deep expertise in structural engineering, precast concrete design, construction workflows, engineering drawings, calculations, standards/codes, material quantities, and the Tekla ecosystem.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 space-y-1">
+                            <span class="font-bold text-sky-600 dark:text-sky-400 block">
+                                Hybrid Software & Domain Troubleshooting:
+                            </span>
+                            <p>
+                                Excels at resolving complex issues where simultaneous understanding of both the software codebase and structural/BIM workflows is required. Systematically converts recurring support friction into long-term product and technical improvements.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =====================================================
+             IMPACT
+             ===================================================== -->
+        <section id="impact"
+                 class="space-y-8 scroll-mt-24">
+            <div>
+                <span class="text-xs font-bold text-sky-500 uppercase tracking-widest">
+                    Value Creation
+                </span>
+                <h2 class="text-3xl font-extrabold mt-1">
+                    Business & Technical Impact
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-6 rounded-2xl space-y-3 border-t-4 border-t-sky-500">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-gauge-high text-sky-500 text-xl"></i>
+                        <h3 class="text-lg font-bold">
+                            Project Performance
+                        </h3>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Tailored software solutions directly improving project speed and quality, reducing manual modeling errors and delivering direct, measurable return on investment across design phases.
+                    </p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl space-y-3 border-t-4 border-t-indigo-500">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-cubes-stacked text-indigo-500 text-xl"></i>
+                        <h3 class="text-lg font-bold">
+                            Engineering Ecosystems
+                        </h3>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Designing larger software ecosystems and design-tool families structured for long-term organizational value, standardization, and multi-project component reusability.
+                    </p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl space-y-3 border-t-4 border-t-emerald-500">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-chart-line text-emerald-500 text-xl"></i>
+                        <h3 class="text-lg font-bold">
+                            Data-Driven Engineering
+                        </h3>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Converting design and project data into actionable intelligence, empowering project managers and structural leads to monitor real-time performance and refine decision-making.
+                    </p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl space-y-3 border-t-4 border-t-amber-500">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-robot text-amber-500 text-xl"></i>
+                        <h3 class="text-lg font-bold">
+                            AI-Assisted Workflows
+                        </h3>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Integrating AI capabilities that drastically minimize repetitive modeling tasks, improve rapid retrieval of complex structural standards, and streamline engineers' daily routines.
+                    </p>
+                </div>
+            </div>
+            <!-- Rapid Response -->
+            <div class="p-6 rounded-2xl glass-card border border-amber-500/30 bg-amber-500/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <span class="text-xs font-bold text-amber-500 uppercase tracking-wider">
+                        <i class="fa-solid fa-bolt mr-1"></i>
+                        Rapid Response Capability
+                    </span>
+                    <h4 class="text-base font-bold">
+                        Urgent Engineering & Business Problem Resolution
+                    </h4>
+                    <p class="text-xs text-slate-600 dark:text-slate-300">
+                        Rapidly architecting and executing targeted software interventions when critical business or engineering challenges demand immediate technical solutions.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- =====================================================
+             TECHNICAL EXPERTISE
+             ===================================================== -->
+        <section id="expertise"
+                 class="space-y-8 scroll-mt-24">
+            <div>
+                <span class="text-xs font-bold text-sky-500 uppercase tracking-widest">
+                    Capabilities
+                </span>
+                <h2 class="text-3xl font-extrabold mt-1">
+                    Technology Matrix
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Software -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-bold text-sky-500 flex items-center gap-2">
+                        <i class="fa-solid fa-code"></i>
+                        Software Development
+                    </h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">C#</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">.NET Framework</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">.NET Core</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">TypeScript</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">JavaScript</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">React</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Next.js</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Node.js</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Python</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">SQL</span>
+                    </div>
+                </div>
+                <!-- Cloud -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-bold text-indigo-500 flex items-center gap-2">
+                        <i class="fa-solid fa-cloud"></i>
+                        Cloud & Infrastructure
+                    </h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Microsoft Azure</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Linux</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">CI/CD Pipelines</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Databases</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Cloud Security</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Infrastructure</span>
+                    </div>
+                </div>
+                <!-- Engineering -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-bold text-emerald-500 flex items-center gap-2">
+                        <i class="fa-solid fa-drafting-compass"></i>
+                        Engineering Technology
+                    </h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">BIM</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Tekla Ecosystem</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Structural Engineering</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Precast Engineering</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Engineering Automation</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Design Systems</span>
+                    </div>
+                </div>
+                <!-- Architecture -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-bold text-amber-500 flex items-center gap-2">
+                        <i class="fa-solid fa-sitemap"></i>
+                        Software Architecture
+                    </h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Software Architecture</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">API-First Systems</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Reusable Platforms</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Data-Driven Architecture</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Cloud Systems</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Integration Architecture</span>
+                    </div>
+                </div>
+                <!-- AI -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 md:col-span-2 lg:col-span-2">
+                    <h3 class="text-base font-bold text-violet-500 flex items-center gap-2">
+                        <i class="fa-solid fa-brain"></i>
+                        AI & Agentic Engineering
+                    </h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">RAG Systems</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">AI-Assisted Engineering</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Agentic Systems</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Model Context Protocol (MCP)</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">AI-to-API Integration</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">Engineering Knowledge Retrieval</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-medium">AI Workflow Automation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =====================================================
+             TECHNOLOGY VISION
+             ===================================================== -->
+        <section id="vision"
+                 class="glass-card p-8 rounded-3xl space-y-6 border border-sky-500/20 scroll-mt-24">
+            <div>
+                <span class="text-xs font-bold text-sky-500 uppercase tracking-widest">
+                    Professional Perspective
+                </span>
+                <h2 class="text-3xl font-extrabold mt-1">
+                    Technology Vision: The Next Generation of Tekla / Structural Software
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                <div class="space-y-2">
+                    <h3 class="text-lg font-bold text-sky-600 dark:text-sky-400">
+                        Headless BIM & Engineering Platforms
+                    </h3>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Separating core engineering calculations and BIM modeling capabilities from traditional desktop monoliths, exposing them through programmable micro-services, cloud-connected APIs, and cloud automation.
+                    </p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400">
+                        API-First Engineering Ecosystems
+                    </h3>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Transforming structural capabilities into universal building blocks for internal applications, third-party software, cloud automation pipelines, custom structural design workflows, and AI agents.
+                    </p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-lg font-bold text-violet-600 dark:text-violet-400">
+                        MCP & Agentic Engineering
+                    </h3>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Leveraging Model Context Protocol (MCP) to construct seamless interfaces between structural engineers, 3D BIM models, calculation APIs, project documentation, and autonomous AI agents.
+                    </p>
+                </div>
+            </div>
+            <!-- Strategic Formula -->
+            <div class="p-6 rounded-2xl glass-card border border-amber-500/30 bg-amber-500/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <span class="text-xl font-bold text-amber-400 uppercase tracking-wider block">
+                        Strategic Synergy Formula
+                    </span>
+                    <p class="text-base font-semibold">
+                        Engineering Intelligence + BIM Data + Core Software Capabilities + AI Agents = Next-Gen AEC Dominance
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- =====================================================
+             AI ENGINEERING
+             ===================================================== -->
+        <section id="ai-systems"
+                 class="space-y-8 scroll-mt-24">
+            <div>
+                <span class="text-xs font-bold text-sky-500 uppercase tracking-widest">
+                    Architectural Paradigm
+                </span>
+                <h2 class="text-3xl font-extrabold mt-1">
+                    AI-Driven Structural Engineering
+                </h2>
+            </div>
+            <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-6">
+                <!-- Conceptual Diagram -->
+                <div class="flex flex-wrap items-center justify-between gap-3 text-center text-xs font-bold">
+                    <div class="p-3 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/30 flex-1 min-w-[120px]">
+                        Structural Model
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-slate-400 hidden sm:block"></i>
+                    <div class="p-3 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30 flex-1 min-w-[120px]">
+                        Engineering APIs
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-slate-400 hidden sm:block"></i>
+                    <div class="p-3 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 flex-1 min-w-[120px]">
+                        Agentic Orchestration
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-slate-400 hidden sm:block"></i>
+                    <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 flex-1 min-w-[120px]">
+                        Automated Verification
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-600 dark:text-slate-300 pt-2">
+                    <div class="space-y-2">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">
+                            Knowledge Base & RAG Integration
+                        </h3>
+                        <p class="leading-relaxed">
+                            Connecting real-time structural standards (Eurocodes, local construction guidelines) to vector databases. Allows instant retrieval of accurate engineering formulas and constraint checks during active modeling.
+                        </p>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">
+                            MCP Agent Execution
+                        </h3>
+                        <p class="leading-relaxed">
+                            Empowering AI agents to interact directly with Tekla Open API endpoints. Intelligent agents analyze structural integrity, perform reinforcement clashes detection, and issue automated model corrections.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- =========================================================
+         FIXED FOOTER
+         ========================================================= -->
+    
+	<footer class="fixed bottom-0 left-0 right-0 z-10
+    border-t border-slate-200 dark:border-slate-800
+    bg-slate-100/95 dark:bg-slate-900/95
+    backdrop-blur-md
+    py-7 text-center text-xs
+    text-slate-500 dark:text-slate-400">
+		<p>© Senior Software Engineer & BIM Engineering Leader Portfolio.</p>
+	</footer>
+    <!-- =========================================================
+         PIXEL DUCK / DONUT SCRIPT
+         ========================================================= -->
+    <script>
+    /* =====================================================
+       THEME
+       ===================================================== */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+    });
+    /* =====================================================
+       NAVIGATION
+       ===================================================== */
+    const navbar = document.getElementById('navbar');
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            const targetId = this.getAttribute('href');
+            const target = document.querySelector(targetId);
+            if (!target) return;
+            const navbarHeight = navbar.offsetHeight;
+            const extraSpacing = 24;
+            const targetPosition =
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                navbarHeight -
+                extraSpacing;
+            window.scrollTo({
+                top: Math.max(0, targetPosition),
+                behavior: 'smooth'
+            });
+            history.pushState(null, '', targetId);
+        });
+    });
+    window.addEventListener('load', () => {
+        if (!window.location.hash) return;
+        const target = document.querySelector(window.location.hash);
+        if (!target) return;
+        setTimeout(() => {
+            const navbarHeight = navbar.offsetHeight;
+            const extraSpacing = 24;
+            const targetPosition =
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                navbarHeight -
+                extraSpacing;
+            window.scrollTo({
+                top: Math.max(0, targetPosition),
+                behavior: 'instant'
+            });
+        }, 50);
+    });
+    /* =====================================================
+       DUCK / DONUT CONFIGURATION
+       ===================================================== */
+    const DONUT_COLORS = [
+        '#FF69B4',
+        '#8B4513',
+        '#3186FF',
+        '#0EBC5F',
+        '#9D50BB',
+        '#FF9800',
+        '#FF4C45',
+        '#00E5FF'
+    ];
+    const DUCK_SIZE = 54;
+    const DONUT_SIZE = 32;
+    const FLOOR_MARGIN = 58;
+    const MAX_DONUTS = 158;
+    /* =====================================================
+       DUST CONFIGURATION
+       ===================================================== */
+    const MAX_DUST = 80;
+    const DUST_COLORS = [
+        '#C8B89A',
+        '#B8A98F',
+        '#D8CBB5',
+        '#AFA18A',
+        '#E0D5C2'
+    ];
+    let dustParticles = [];
+    /* =====================================================
+       DUCK STATE
+       ===================================================== */
+    const countElement =
+        document.getElementById('artifact-count');
+    let eatenCount = 0;
+    let canvas;
+    let ctx;
+    let donuts = [];
+    let chomp = 0;
+    const duck = {
+        x: 0,
+        y: 0,
+        facing: 1,
+        roamTimer: 40,
+        roamSpeed: 1.2,
+        walk: 0,
+        /* True only while actively chasing a donut */
+        chasing: false,
+        /* Used to control how frequently dust is emitted */
+        dustTimer: 0
+    };
+    /* =====================================================
+       THEME HELPERS
+       ===================================================== */
+    function isDarkTheme() {
+        return document.documentElement.classList.contains('dark');
+    }
+    function floorY(height, size) {
+        return height - FLOOR_MARGIN - size / 2;
+    }
+    /* =====================================================
+       DUST PARTICLES
+       ===================================================== */
+    function createDustParticle() {
+        if (dustParticles.length >= MAX_DUST) {
+            dustParticles.shift();
+        }
+        /*
+         * Emit dust behind the duck rather than directly
+         * underneath it.
+         */
+        const behindX =
+            duck.x -
+            duck.facing *
+            (DUCK_SIZE * 0.28);
+        const ground =
+            duck.y +
+            DUCK_SIZE * 0.38;
+        dustParticles.push({
+            x:
+                behindX +
+                (Math.random() - 0.5) * 12,
+            y:
+                ground -
+                Math.random() * 4,
+            vx:
+                -duck.facing *
+                (0.25 + Math.random() * 0.7),
+            vy:
+                -(0.25 + Math.random() * 0.65),
+            size:
+                2 +
+                Math.random() * 4,
+            life: 1,
+            decay:
+                0.025 +
+                Math.random() * 0.035,
+            color:
+                DUST_COLORS[
+                    Math.floor(
+                        Math.random() *
+                        DUST_COLORS.length
+                    )
+                ]
+        });
+    }
+    function updateDust() {
+        for (
+            let i = dustParticles.length - 1;
+            i >= 0;
+            i--
+        ) {
+            const p = dustParticles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            /*
+             * Slight upward drift and gravity-like settling.
+             */
+            p.vy -= 0.022;
+            p.life -= p.decay;
+            /*
+             * Dust particles disappear naturally.
+             */
+            if (p.life <= 0) {
+                dustParticles.splice(i, 1);
+            }
+        }
+    }
+    function drawDust() {
+        if (!dustParticles.length) return;
+        ctx.save();
+        for (const p of dustParticles) {
+            ctx.globalAlpha =
+                Math.max(0, p.life) * 0.75;
+            ctx.fillStyle = p.color;
+            /*
+             * Pixel-style square particles.
+             */
+            const size =
+                Math.max(
+                    5,
+                    Math.round(p.size * p.life)
+                );
+            ctx.fillRect(
+                Math.round(p.x),
+                Math.round(p.y),
+                size,
+                size
+            );
+        }
+        ctx.restore();
+    }
+    /*
+     * Emit dust only when the duck is running/chasing.
+     *
+     * Walking around without prey produces ZERO dust.
+     */
+    function emitChaseDust() {
+        if (!duck.chasing) {
+            duck.dustTimer = 0;
+            return;
+        }
+        duck.dustTimer--;
+        if (duck.dustTimer <= 0) {
+            /*
+             * Two or three tiny particles per burst
+             * makes the movement feel more energetic.
+             */
+            createDustParticle();
+            if (Math.random() < 0.45) {
+                createDustParticle();
+            }
+            duck.dustTimer =
+                2 +
+                Math.floor(Math.random() * 3);
+        }
+    }
+    /* =====================================================
+       DRAW PIXEL DUCK
+       ===================================================== */
+    function drawPixelDuck(ctx, size) {
+        const p = size / 16;
+        ctx.save();
+        ctx.translate(
+            -size / 2,
+            -size / 2
+        );
+        ctx.fillStyle = '#FFD13B';
+        ctx.fillRect(
+            3 * p,
+            2 * p,
+            8 * p,
+            7 * p
+        );
+        ctx.fillRect(
+            2 * p,
+            6 * p,
+            12 * p,
+            7 * p
+        );
+        ctx.fillRect(
+            3 * p,
+            13 * p,
+            9 * p,
+            2 * p
+        );
+        ctx.fillStyle = '#F4A200';
+        ctx.fillRect(
+            4 * p,
+            8 * p,
+            5 * p,
+            4 * p
+        );
+        ctx.fillRect(
+            3 * p,
+            9 * p,
+            6 * p,
+            2 * p
+        );
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(
+            8 * p,
+            3 * p,
+            3 * p,
+            3 * p
+        );
+        ctx.fillStyle = '#111111';
+        ctx.fillRect(
+            9 * p,
+            4 * p,
+            2 * p,
+            2 * p
+        );
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(
+            9 * p,
+            4 * p,
+            1 * p,
+            1 * p
+        );
+        ctx.fillStyle = '#FF6D00';
+        ctx.fillRect(
+            11 * p,
+            5 * p,
+            5 * p,
+            3 * p
+        );
+        ctx.fillRect(
+            11 * p,
+            7 * p,
+            4 * p,
+            1 * p
+        );
+        ctx.fillStyle = '#FF8A80';
+        ctx.fillRect(
+            7 * p,
+            6 * p,
+            2 * p,
+            1 * p
+        );
+        ctx.fillStyle = '#FFD13B';
+        ctx.fillRect(
+            1 * p,
+            7 * p,
+            2 * p,
+            3 * p
+        );
+        ctx.fillStyle =
+            'rgba(0, 0, 0, 0.15)';
+        ctx.fillRect(
+            2 * p,
+            14 * p,
+            10 * p,
+            1 * p
+        );
+        ctx.restore();
+    }
+    /* =====================================================
+       DRAW PIXEL DONUT
+       ===================================================== */
+    function drawPixelDonut(
+        ctx,
+        size,
+        frostingColor
+    ) {
+        const p = size / 14;
+        ctx.save();
+        ctx.translate(
+            -size / 2,
+            -size / 2
+        );
+        ctx.fillStyle = '#D99B56';
+        ctx.fillRect(
+            3 * p,
+            1 * p,
+            8 * p,
+            12 * p
+        );
+        ctx.fillRect(
+            1 * p,
+            3 * p,
+            12 * p,
+            8 * p
+        );
+        ctx.fillRect(
+            2 * p,
+            2 * p,
+            10 * p,
+            10 * p
+        );
+        ctx.fillStyle =
+            frostingColor || '#FF69B4';
+        ctx.fillRect(
+            3 * p,
+            1 * p,
+            8 * p,
+            5 * p
+        );
+        ctx.fillRect(
+            2 * p,
+            2 * p,
+            10 * p,
+            6 * p
+        );
+        ctx.fillRect(
+            1 * p,
+            3 * p,
+            12 * p,
+            4 * p
+        );
+        ctx.fillRect(
+            2 * p,
+            8 * p,
+            2 * p,
+            2 * p
+        );
+        ctx.fillRect(
+            6 * p,
+            8 * p,
+            2 * p,
+            1 * p
+        );
+        ctx.fillRect(
+            10 * p,
+            8 * p,
+            2 * p,
+            3 * p
+        );
+        ctx.fillStyle = '#C0823F';
+        ctx.fillRect(
+            5 * p,
+            4 * p,
+            4 * p,
+            1 * p
+        );
+        ctx.fillRect(
+            4 * p,
+            5 * p,
+            1 * p,
+            4 * p
+        );
+        ctx.globalCompositeOperation =
+            'destination-out';
+        ctx.fillStyle = '#000';
+        ctx.fillRect(
+            5 * p,
+            5 * p,
+            4 * p,
+            4 * p
+        );
+        ctx.globalCompositeOperation =
+            'source-over';
+        const sprinkles = [
+            { x: 3, y: 2, c: '#FFFFFF' },
+            { x: 7, y: 2, c: '#00E5FF' },
+            { x: 10, y: 3, c: '#FFEA00' },
+            { x: 3, y: 5, c: '#76FF03' },
+            { x: 9, y: 5, c: '#FFFFFF' },
+            { x: 6, y: 3, c: '#FF4081' }
+        ];
+        sprinkles.forEach((s) => {
+            ctx.fillStyle = s.c;
+            ctx.fillRect(
+                s.x * p,
+                s.y * p,
+                1.5 * p,
+                1.5 * p
+            );
+        });
+        ctx.restore();
+    }
+    /* =====================================================
+       DROP DONUTS
+       ===================================================== */
+    function dropDonuts() {
+        const w = window.innerWidth;
+        const room =
+            MAX_DONUTS -
+            donuts.length;
+        const count =
+            Math.floor(Math.random() * 8) + 1
+        for (let i = 0; i < count; i++) {
+            donuts.push({
+                x:
+                    36 +
+                    Math.random() *
+                    Math.max(40, w - 72),
+                y:
+                    -DONUT_SIZE -
+                    Math.random() * 220 -
+                    i * 28,
+                vx:
+                    (Math.random() - 0.5) * 2.2,
+                vy:
+                    0.4 +
+                    Math.random() * 1.2,
+                angle:
+                    Math.random() *
+                    Math.PI *
+                    2,
+                spin:
+                    (Math.random() - 0.5) * 0.14,
+                frosting:
+                    DONUT_COLORS[
+                        (i + donuts.length) %
+                        DONUT_COLORS.length
+                    ],
+                eaten: 0
+            });
+        }
+    }
+    /* =====================================================
+       PICK DONUT PREY
+       ===================================================== */
+    function pickPrey() {
+        const live =
+            donuts.filter(
+                (d) => !d.eaten
+            );
+        if (!live.length) {
+            return null;
+        }
+        let lowest = live[0];
+        for (const d of live) {
+            if (d.y > lowest.y) {
+                lowest = d;
+            }
+        }
+        let best = lowest;
+        let bestDx =
+            Math.abs(
+                lowest.x -
+                duck.x
+            );
+        for (const d of live) {
+            if (
+                lowest.y -
+                d.y >
+                90
+            ) {
+                continue;
+            }
+            const dx =
+                Math.abs(
+                    d.x -
+                    duck.x
+                );
+            if (dx < bestDx) {
+                bestDx = dx;
+                best = d;
+            }
+        }
+        return best;
+    }
+    /* =====================================================
+       UPDATE DUCK
+       ===================================================== */
+    function updateDuck(w, h) {
+        const y =
+            floorY(
+                h,
+                DUCK_SIZE
+            );
+        const prey =
+            pickPrey();
+        const margin =
+            DUCK_SIZE / 2 + 8;
+        /*
+         * Reset chasing state every frame.
+         * It becomes true only if the duck has a donut
+         * target AND is actually moving toward it.
+         */
+        duck.chasing = false;
+        if (prey) {
+            const dx =
+                prey.x -
+                duck.x;
+            const speed = 6.4;
+            if (Math.abs(dx) > 3) {
+                duck.chasing = true;
+                duck.facing =
+                    dx > 0
+                        ? 1
+                        : -1;
+                duck.x +=
+                    duck.facing *
+                    Math.min(
+                        speed,
+                        Math.abs(dx)
+                    );
+                /*
+                 * Faster leg animation while running.
+                 */
+                duck.walk += 0.35;
+            }
+        } else {
+            duck.roamTimer--;
+            if (
+                duck.roamTimer <= 0
+            ) {
+                duck.facing =
+                    Math.random() < 0.5
+                        ? -1
+                        : 1;
+                duck.roamSpeed =
+                    0.7 +
+                    Math.random() * 1.5;
+                duck.roamTimer =
+                    80 +
+                    Math.random() * 160;
+            }
+            /*
+             * Normal walking.
+             * No dust is emitted here.
+             */
+            duck.x +=
+                duck.facing *
+                duck.roamSpeed;
+            duck.walk += 0.12;
+        }
+        if (duck.x < margin) {
+            duck.x = margin;
+            duck.facing = 1;
+            duck.roamTimer = 40;
+        } else if (
+            duck.x >
+            w - margin
+        ) {
+            duck.x =
+                w - margin;
+            duck.facing = -1;
+            duck.roamTimer = 40;
+        }
+        duck.y =
+            y +
+            Math.sin(
+                duck.walk * 2
+            ) * 2;
+        /*
+         * Dust is generated AFTER the movement state
+         * has been calculated.
+         */
+        emitChaseDust();
+    }
+    /* =====================================================
+       UPDATE DONUTS
+       ===================================================== */
+    function updateDonuts(w, h) {
+        const ground =
+            floorY(
+                h,
+                DONUT_SIZE
+            ) + 6;
+        const duckReachY =
+            floorY(
+                h,
+                DUCK_SIZE
+            );
+        for (
+            let i = donuts.length - 1;
+            i >= 0;
+            i--
+        ) {
+            const d = donuts[i];
+            if (d.eaten) {
+                d.eaten += 1;
+                if (d.eaten > 10) {
+                    donuts.splice(i, 1);
+                }
+                continue;
+            }
+            d.vy += 0.28;
+            d.vx *= 0.995;
+            d.x += d.vx;
+            d.y += d.vy;
+            d.angle += d.spin;
+            d.spin *= 0.99;
+            if (
+                d.x <
+                DONUT_SIZE / 2
+            ) {
+                d.x =
+                    DONUT_SIZE / 2;
+                d.vx =
+                    Math.abs(d.vx) *
+                    0.6;
+            } else if (
+                d.x >
+                w -
+                DONUT_SIZE / 2
+            ) {
+                d.x =
+                    w -
+                    DONUT_SIZE / 2;
+                d.vx =
+                    -Math.abs(d.vx) *
+                    0.6;
+            }
+            if (d.y > ground) {
+                d.y = ground;
+                d.vy =
+                    -d.vy * 0.32;
+                d.vx *= 0.82;
+                d.spin +=
+                    d.vx * 0.01;
+                if (
+                    Math.abs(d.vy) <
+                    1.1
+                ) {
+                    d.vy = 0;
+                }
+            }
+            const nearFloor =
+                d.y >
+                duckReachY - 36;
+            const hit =
+                Math.hypot(
+                    d.x - duck.x,
+                    d.y - duck.y
+                ) <
+                DUCK_SIZE * 0.42 +
+                DONUT_SIZE * 0.42;
+            if (
+                nearFloor &&
+                hit
+            ) {
+                d.eaten = 1;
+                chomp = 8;
+                eatenCount++;
+                countElement.innerText =
+                    eatenCount +
+                    (
+                        eatenCount === 1
+                            ? ' Item'
+                            : ' Items'
+                    );
+            }
+        }
+    }
+    /* =====================================================
+       DRAW SHADOW
+       ===================================================== */
+    function drawShadow(
+        x,
+        y,
+        rx,
+        ry
+    ) {
+        ctx.save();
+        ctx.fillStyle =
+            isDarkTheme()
+                ? '#757272'
+                : 'rgba(15,23,42,0.16)';
+        ctx.beginPath();
+        ctx.ellipse(
+            x,
+            y,
+            rx,
+            ry,
+            0,
+            0,
+            Math.PI * 2
+        );
+        ctx.fill();
+        ctx.restore();
+    }
+    /* =====================================================
+       RENDER LOOP
+       ===================================================== */
+    function render() {
+        const dpr =
+            Math.min(
+                window.devicePixelRatio || 1,
+                2
+            );
+        const w =
+            window.innerWidth;
+        const h =
+            window.innerHeight;
+        if (
+            canvas.width !==
+            Math.floor(w * dpr) ||
+            canvas.height !==
+            Math.floor(h * dpr)
+        ) {
+            canvas.width =
+                Math.floor(w * dpr);
+            canvas.height =
+                Math.floor(h * dpr);
+        }
+        ctx.setTransform(
+            dpr,
+            0,
+            0,
+            dpr,
+            0,
+            0
+        );
+        ctx.clearRect(
+            0,
+            0,
+            w,
+            h
+        );
+        updateDonuts(w, h);
+        updateDuck(w, h);
+        /*
+         * Update dust after duck movement.
+         */
+        updateDust();
+        if (chomp > 0) {
+            chomp--;
+        }
+        const groundLine =
+            h -
+            FLOOR_MARGIN +
+            2;
+        /* =================================================
+           DONUTS
+           ================================================= */
+        for (const d of donuts) {
+            const scale =
+                d.eaten
+                    ? Math.max(
+                        0.05,
+                        1 -
+                        d.eaten / 10
+                    )
+                    : 1;
+            drawShadow(
+                d.x,
+                groundLine,
+                DONUT_SIZE *
+                    0.38 *
+                    scale,
+                6 * scale
+            );
+            ctx.save();
+            ctx.translate(
+                d.x,
+                d.y
+            );
+            ctx.rotate(
+                d.angle * 0.35
+            );
+            ctx.scale(
+                scale,
+                scale
+            );
+            drawPixelDonut(
+                ctx,
+                DONUT_SIZE,
+                d.frosting
+            );
+            ctx.restore();
+        }
+        /*
+         * Draw dust BEFORE the duck so the duck appears
+         * in front of its own dust cloud.
+         */
+        drawDust();
+        /* =================================================
+           DUCK
+           ================================================= */
+        const squash =
+            chomp > 0
+                ? 1 +
+                  Math.sin(
+                      (8 - chomp) *
+                      0.8
+                  ) *
+                  0.08
+                : 1;
+        drawShadow(
+            duck.x,
+            groundLine,
+            DUCK_SIZE * 0.42,
+            7
+        );
+        ctx.save();
+        ctx.translate(
+            duck.x,
+            duck.y
+        );
+        ctx.scale(
+            duck.facing * squash,
+            2 - squash
+        );
+        ctx.rotate(
+            Math.sin(
+                duck.walk
+            ) *
+            0.06 *
+            duck.facing
+        );
+        drawPixelDuck(
+            ctx,
+            DUCK_SIZE
+        );
+        ctx.restore();
+        requestAnimationFrame(
+            render
+        );
+    }
+    /* =====================================================
+       INITIALIZE DUCK
+       ===================================================== */
+    function initDuckChase() {
+        const container =
+            document.getElementById(
+                'canvas-container'
+            );
+        canvas =
+            document.createElement(
+                'canvas'
+            );
+        canvas.style.width =
+            '100%';
+        canvas.style.height =
+            '100%';
+        canvas.style.display =
+            'block';
+        ctx =
+            canvas.getContext(
+                '2d'
+            );
+        /*
+         * Keep the pixel art crisp.
+         */
+        ctx.imageSmoothingEnabled =
+            false;
+        container.appendChild(
+            canvas
+        );
+        duck.x =
+            window.innerWidth *
+            0.35;
+        document
+            .getElementById(
+                'duck-quack-btn'
+            )
+            .addEventListener(
+                'click',
+                dropDonuts
+            );
+        render();
+    }
+    /* =====================================================
+       START
+       ===================================================== */
+    window.addEventListener(
+        'DOMContentLoaded',
+        initDuckChase
+    );
+</script>
+</body>
+</html>
