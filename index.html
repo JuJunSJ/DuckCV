@@ -169,12 +169,20 @@
             position: fixed;
             inset: 0;
             width: 100%;
-            height: 100%;
             max-width: 100%;
+            height: 100svh;
+            height: 100dvh;
+            background: transparent;
             pointer-events: none;
             z-index: 20;
             touch-action: none;
             overflow: hidden;
+        }
+        #canvas-container canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: transparent;
         }
         /*
          * =====================================================
@@ -3214,21 +3222,52 @@
 		let canvasWidth = 0;
 		let canvasHeight = 0;
 		let canvasDpr = 1;
+		let canvasPixelWidth = 0;
+		let canvasPixelHeight = 0;
 
 		function resizeCanvas() {
-			const rect = canvas.getBoundingClientRect();
-
-			canvasWidth = Math.max(1, Math.round(rect.width));
-			canvasHeight = Math.max(1, Math.round(rect.height));
-
-			canvasDpr = Math.min(
-				window.devicePixelRatio || 1,
-				window.innerWidth < 768 ? 1.5 : 2
+			if (!canvas || !ctx) {
+				return;
+			}
+			performanceConfig =
+				getPerformanceConfig();
+			const rect =
+				canvas.getBoundingClientRect();
+			canvasWidth = Math.max(
+				1,
+				Math.round(rect.width)
 			);
-
-			canvas.width = Math.round(canvasWidth * canvasDpr);
-			canvas.height = Math.round(canvasHeight * canvasDpr);
-
+			canvasHeight = Math.max(
+				1,
+				Math.round(rect.height)
+			);
+			canvasDpr =
+				performanceConfig.dpr;
+			const nextPixelWidth =
+				Math.round(
+					canvasWidth *
+					canvasDpr
+				);
+			const nextPixelHeight =
+				Math.round(
+					canvasHeight *
+					canvasDpr
+				);
+			if (
+				canvasPixelWidth !==
+				nextPixelWidth ||
+				canvasPixelHeight !==
+				nextPixelHeight
+			) {
+				canvas.width =
+					nextPixelWidth;
+				canvas.height =
+					nextPixelHeight;
+				canvasPixelWidth =
+					nextPixelWidth;
+				canvasPixelHeight =
+					nextPixelHeight;
+			}
 			ctx.setTransform(
 				canvasDpr,
 				0,
@@ -3237,6 +3276,8 @@
 				0,
 				0
 			);
+			ctx.imageSmoothingEnabled =
+				false;
 		}
         /*function resizeCanvas() {
             if (!canvas || !ctx) {
@@ -3307,42 +3348,9 @@
             ) {
                 return;
             }
-            const dpr =
-                performanceConfig.dpr;
-            const w =
-                window.innerWidth;
-            const h =
-                window.innerHeight;
-            /*
-             * Resize if necessary.
-             */
-            const targetWidth =
-                Math.floor(
-                    w * dpr
-                );
-            const targetHeight =
-                Math.floor(
-                    h * dpr
-                );
-            if (
-                canvas.width !==
-                targetWidth ||
-                canvas.height !==
-                targetHeight
-            ) {
-                canvas.width =
-                    targetWidth;
-                canvas.height =
-                    targetHeight;
-            }
-            ctx.setTransform(
-                dpr,
-                0,
-                0,
-                dpr,
-                0,
-                0
-            );
+            resizeCanvas();
+            const w = canvasWidth;
+            const h = canvasHeight;
             ctx.clearRect(
                 0,
                 0,
@@ -3553,7 +3561,8 @@
                     '2d',
                     {
                         alpha: true,
-                        desynchronized: true
+                        desynchronized:
+                            !mobileQuery.matches
                     }
                 );
             if (!ctx) {
@@ -3605,20 +3614,9 @@
             if (!canvas || !ctx) {
                 return;
             }
-            const dpr =
-                performanceConfig.dpr;
-            const w =
-                window.innerWidth;
-            const h =
-                window.innerHeight;
-            ctx.setTransform(
-                dpr,
-                0,
-                0,
-                dpr,
-                0,
-                0
-            );
+            resizeCanvas();
+            const w = canvasWidth;
+            const h = canvasHeight;
             ctx.clearRect(
                 0,
                 0,
@@ -3655,34 +3653,42 @@
            RESIZE
            ===================================================== */
         let resizeTimeout = null;
+        function handleCanvasViewportResize() {
+            if (!canvasInitialized) {
+                return;
+            }
+            clearTimeout(resizeTimeout);
+            resizeTimeout =
+                setTimeout(
+                    () => {
+                        resizeCanvas();
+                        if (
+                            prefersReducedMotion
+                        ) {
+                            renderStaticDuck();
+                        } else {
+                            ensureAnimationRunning();
+                        }
+                    },
+                    100
+                );
+        }
         window.addEventListener(
             'resize',
-            () => {
-                /*
-                 * Debounce expensive canvas resizing.
-                 */
-                clearTimeout(
-                    resizeTimeout
-                );
-                resizeTimeout =
-                    setTimeout(
-                        () => {
-                            resizeCanvas();
-                            if (
-                                prefersReducedMotion
-                            ) {
-                                renderStaticDuck();
-                            } else {
-                                ensureAnimationRunning();
-                            }
-                        },
-                        100
-                    );
-            },
+            handleCanvasViewportResize,
             {
                 passive: true
             }
         );
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener(
+                'resize',
+                handleCanvasViewportResize,
+                {
+                    passive: true
+                }
+            );
+        }
         /* =====================================================
            START
            ===================================================== */
