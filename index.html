@@ -75,14 +75,84 @@
     <style>
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 5.5rem;
+            scroll-padding-top: calc(
+                5.5rem + env(safe-area-inset-top, 0px)
+            );
         }
         body {
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
         section {
-            scroll-margin-top: 5.5rem;
+            scroll-margin-top: calc(
+                5.5rem + env(safe-area-inset-top, 0px)
+            );
+        }
+        #navbar {
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-left: env(safe-area-inset-left, 0px);
+            padding-right: env(safe-area-inset-right, 0px);
+        }
+        #main-content {
+            padding-bottom: calc(
+                6.5rem + env(safe-area-inset-bottom, 0px)
+            );
+        }
+        @media (min-width: 640px) {
+            #main-content {
+                padding-bottom: calc(
+                    7.5rem + env(safe-area-inset-bottom, 0px)
+                );
+            }
+        }
+        .site-footer {
+            padding-bottom: max(
+                0.75rem,
+                env(safe-area-inset-bottom, 0px)
+            );
+            padding-left: max(
+                1rem,
+                env(safe-area-inset-left, 0px)
+            );
+            padding-right: max(
+                1rem,
+                env(safe-area-inset-right, 0px)
+            );
+        }
+        .nav-touch-target {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2.75rem;
+            min-height: 2.75rem;
+        }
+        .profile-highlight-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.25rem;
+            align-items: start;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgb(226 232 240);
+        }
+        .dark .profile-highlight-row {
+            border-bottom-color: rgb(30 41 59);
+        }
+        .profile-highlight-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .profile-highlight-value {
+            font-weight: 600;
+            word-break: break-word;
+        }
+        @media (min-width: 640px) {
+            .profile-highlight-row {
+                grid-template-columns: 1fr auto;
+                gap: 1rem;
+            }
+            .profile-highlight-value {
+                text-align: right;
+            }
         }
         /*
          * Safe viewport handling on modern mobile browsers.
@@ -98,8 +168,9 @@
         #canvas-container {
             position: fixed;
             inset: 0;
-            width: 100vw;
-            height: 100svh;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
             pointer-events: none;
             z-index: 20;
             touch-action: none;
@@ -286,7 +357,7 @@
     >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Main navbar row -->
-            <div class="flex items-center justify-between min-h-16 gap-2">
+            <div class="flex items-center justify-between min-h-16 gap-1 sm:gap-2 min-w-0">
 			
 				<!-- =================================================
 					 LEFT CONTROLS
@@ -297,6 +368,7 @@
 						id="mobile-menu-btn"
 						type="button"
 						class="
+							nav-touch-target
 							lg:hidden
 							p-2
 							rounded-lg
@@ -329,10 +401,12 @@
                     href="#overview"
                     class="
                         flex
+                        flex-1
                         items-center
                         gap-2
                         sm:gap-3
                         min-w-0
+                        overflow-hidden
                         rounded-lg
                     "
                     aria-label="Go to portfolio overview"
@@ -449,6 +523,7 @@
                         id="duck-quack-btn"
                         type="button"
                         class="
+                            nav-touch-target
                             px-2
                             sm:px-3
                             py-1.5
@@ -481,6 +556,7 @@
                         id="theme-toggle"
                         type="button"
                         class="
+                            nav-touch-target
                             p-2
                             rounded-lg
                             text-slate-500
@@ -592,8 +668,6 @@
             sm:px-6
             lg:px-8
             pt-24
-            pb-24
-            sm:pb-28
             space-y-16
             lg:space-y-24
         "
@@ -693,6 +767,8 @@
                         >
                         <h1
                             class="
+                                min-w-0
+                                break-words
                                 text-3xl
                                 sm:text-4xl
                                 lg:text-5xl
@@ -779,100 +855,49 @@
                         Profile Highlights
                     </h3>
                     <div class="space-y-3 text-sm">
-                        <div
-                            class="
-                                grid
-                                grid-cols-[1fr_auto]
-                                gap-4
-                                items-start
-                                pb-2
-                                border-b
-                                border-slate-200
-                                dark:border-slate-800
-                            "
-                        >
+                        <div class="profile-highlight-row">
                             <span class="text-slate-500 dark:text-slate-400">
                                 Education
                             </span>
-                            <span class="font-semibold text-right">
+                            <span class="profile-highlight-value">
                                 B.Eng. Civil Engineering
                             </span>
                         </div>
-                        <div
-                            class="
-                                grid
-                                grid-cols-[1fr_auto]
-                                gap-4
-                                items-start
-                                pb-2
-                                border-b
-                                border-slate-200
-                                dark:border-slate-800
-                            "
-                        >
+                        <div class="profile-highlight-row">
                             <span class="text-slate-500 dark:text-slate-400">
                                 A-Insinöörit Tenure
                             </span>
-                            <span class="font-semibold">
+                            <span class="profile-highlight-value">
                                 10 Years
                             </span>
                         </div>
-                        <div
-                            class="
-                                grid
-                                grid-cols-[1fr_auto]
-                                gap-4
-                                items-start
-                                pb-2
-                                border-b
-                                border-slate-200
-                                dark:border-slate-800
-                            "
-                        >
+                        <div class="profile-highlight-row">
                             <span class="text-slate-500 dark:text-slate-400">
                                 Software Experience
                             </span>
-                            <span class="font-semibold text-right">
+                            <span class="profile-highlight-value">
                                 12 Years Professional
                             </span>
                         </div>
-                        <div
-                            class="
-                                grid
-                                grid-cols-[1fr_auto]
-                                gap-4
-                                items-start
-                                pb-2
-                                border-b
-                                border-slate-200
-                                dark:border-slate-800
-                            "
-                        >
+                        <div class="profile-highlight-row">
                             <span class="text-slate-500 dark:text-slate-400">
                                 Key Ecosystem
                             </span>
-                            <span class="font-semibold text-right">
+                            <span class="profile-highlight-value">
                                 Tekla, Azure, .NET, React
                             </span>
                         </div>
-                        <div
-                            class="
-                                grid
-                                grid-cols-[1fr_auto]
-                                gap-4
-                                items-start
-                            "
-                        >
+                        <div class="profile-highlight-row">
                             <span class="text-slate-500 dark:text-slate-400">
                                 Eaten Snacks
                             </span>
                             <span
                                 id="artifact-count"
                                 class="
+                                    profile-highlight-value
                                     font-bold
                                     text-amber-500
                                     text-base
-                                    text-right
                                 "
                             >
                                 0 Items
@@ -2003,6 +2028,7 @@
          ========================================================= -->
     <footer
         class="
+            site-footer
             fixed
             bottom-0
             left-0
@@ -2014,8 +2040,8 @@
             bg-slate-100/95
             dark:bg-slate-900/95
             backdrop-blur-md
-            py-3
-            sm:py-5
+            pt-3
+            sm:pt-5
             text-center
             text-[11px]
             sm:text-xs
@@ -2023,7 +2049,7 @@
             dark:text-slate-400
         "
     >
-        <p>
+        <p class="break-words px-2">
             © Senior Software Engineer & BIM Engineering Leader Portfolio.
         </p>
     </footer>
