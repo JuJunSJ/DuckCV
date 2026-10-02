@@ -1667,7 +1667,7 @@
                         leading-tight
                     "
                 >
-                    Technology Vision: The Next Generation of Tekla / Structural Software
+                    Technology Vision: The Next Generation of Structural Software
                 </h2>
             </div>
             <div
@@ -2085,53 +2085,41 @@
          ========================================================= -->
 <script>
 'use strict';
-
 /* =====================================================
    GLOBAL CONFIGURATION
    ===================================================== */
 const root = document.documentElement;
-
 const prefersReducedMotion =
     window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 const mobileQuery =
     window.matchMedia('(max-width: 767px)');
-
 const smallMobileQuery =
     window.matchMedia('(max-width: 480px)');
-
-
 /* =====================================================
    THEME
    ===================================================== */
 const themeToggleBtn =
     document.getElementById('theme-toggle');
-
 if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', () => {
         const dark =
             root.classList.toggle('dark');
-
         localStorage.setItem(
             'theme',
             dark ? 'dark' : 'light'
         );
-
         updateThemeColor();
     });
 }
-
 function updateThemeColor() {
     const metaTheme =
         document.querySelector(
             'meta[name="theme-color"]'
         );
-
     if (!metaTheme) {
         return;
     }
-
     metaTheme.setAttribute(
         'content',
         root.classList.contains('dark')
@@ -2139,22 +2127,16 @@ function updateThemeColor() {
             : '#f8fafc'
     );
 }
-
 updateThemeColor();
-
-
 /* =====================================================
    MOBILE NAVIGATION
    ===================================================== */
 const mobileMenuBtn =
     document.getElementById('mobile-menu-btn');
-
 const mobileMenu =
     document.getElementById('mobile-menu');
-
 const mobileMenuIcon =
     document.getElementById('mobile-menu-icon');
-
 function closeMobileMenu() {
     if (
         !mobileMenu ||
@@ -2163,23 +2145,18 @@ function closeMobileMenu() {
     ) {
         return;
     }
-
     mobileMenu.classList.add('hidden');
-
     mobileMenuBtn.setAttribute(
         'aria-expanded',
         'false'
     );
-
     mobileMenuBtn.setAttribute(
         'aria-label',
         'Open navigation menu'
     );
-
     mobileMenuIcon.className =
         'fa-solid fa-bars text-lg';
 }
-
 function openMobileMenu() {
     if (
         !mobileMenu ||
@@ -2188,23 +2165,18 @@ function openMobileMenu() {
     ) {
         return;
     }
-
     mobileMenu.classList.remove('hidden');
-
     mobileMenuBtn.setAttribute(
         'aria-expanded',
         'true'
     );
-
     mobileMenuBtn.setAttribute(
         'aria-label',
         'Close navigation menu'
     );
-
     mobileMenuIcon.className =
         'fa-solid fa-xmark text-lg';
 }
-
 if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener(
         'click',
@@ -2213,7 +2185,6 @@ if (mobileMenuBtn) {
                 mobileMenuBtn.getAttribute(
                     'aria-expanded'
                 ) === 'true';
-
             if (isOpen) {
                 closeMobileMenu();
             } else {
@@ -2222,7 +2193,6 @@ if (mobileMenuBtn) {
         }
     );
 }
-
 document
     .querySelectorAll('.mobile-nav-link')
     .forEach(link => {
@@ -2233,7 +2203,6 @@ document
             }
         );
     });
-
 document.addEventListener(
     'click',
     event => {
@@ -2244,20 +2213,17 @@ document.addEventListener(
         ) {
             return;
         }
-
         const clickedInside =
             mobileMenu.contains(event.target) ||
             (
                 mobileMenuBtn &&
                 mobileMenuBtn.contains(event.target)
             );
-
         if (!clickedInside) {
             closeMobileMenu();
         }
     }
 );
-
 document.addEventListener(
     'keydown',
     event => {
@@ -2266,7 +2232,6 @@ document.addEventListener(
         }
     }
 );
-
 window.addEventListener(
     'resize',
     () => {
@@ -2275,14 +2240,11 @@ window.addEventListener(
         }
     }
 );
-
-
 /* =====================================================
    PRINT
    ===================================================== */
 const printBtn =
     document.getElementById('print-btn');
-
 if (printBtn) {
     printBtn.addEventListener(
         'click',
@@ -2291,8 +2253,6 @@ if (printBtn) {
         }
     );
 }
-
-
 /* =====================================================
    NAVIGATION
    ===================================================== */
@@ -2304,31 +2264,25 @@ document
             event => {
                 const targetId =
                     link.getAttribute('href');
-
                 if (
                     !targetId ||
                     targetId === '#'
                 ) {
                     return;
                 }
-
                 const target =
                     document.querySelector(
                         targetId
                     );
-
                 if (!target) {
                     return;
                 }
             }
         );
     });
-
-
 /* =====================================================
    DEVELOPER / ARTIFACT CONFIGURATION
    ===================================================== */
-
 const ARTIFACT_TYPES = [
     {
         name: 'Azure',
@@ -2391,24 +2345,18 @@ const ARTIFACT_TYPES = [
         accent: '#FFD43B'
     }
 ];
-
 const STICKMAN_SIZE = 58;
 const ARTIFACT_SIZE = 46;
 const FLOOR_MARGIN = 28;
-
-
 /*
  * Capture initial viewport height.
  * This becomes the permanent floor reference.
  */
 const staticFloorHeight =
     window.innerHeight;
-
 const STATIC_FLOOR_Y =
     staticFloorHeight -
     FLOOR_MARGIN;
-
-
 /* =====================================================
    PERFORMANCE
    ===================================================== */
@@ -2423,7 +2371,6 @@ function getPerformanceConfig() {
             roamMax: 1.0
         };
     }
-
     if (mobileQuery.matches) {
         return {
             maxArtifacts: 60,
@@ -2434,7 +2381,6 @@ function getPerformanceConfig() {
             roamMax: 1.2
         };
     }
-
     return {
         maxArtifacts: 158,
         maxDust: 80,
@@ -2447,11 +2393,8 @@ function getPerformanceConfig() {
         roamMax: 2.2
     };
 }
-
 let performanceConfig =
     getPerformanceConfig();
-
-
 /* =====================================================
    DUST
    ===================================================== */
@@ -2462,10 +2405,7 @@ const DUST_COLORS = [
     '#AFA18A',
     '#E0D5C2'
 ];
-
 let dustParticles = [];
-
-
 /* =====================================================
    STICKMAN STATE
    ===================================================== */
@@ -2473,23 +2413,15 @@ const countElement =
     document.getElementById(
         'artifact-count'
     );
-
 let eatenCount = 0;
-
 let canvas = null;
 let ctx = null;
-
 let artifacts = [];
-
 let chomp = 0;
-
 let animationFrame = null;
-
 let pageVisible =
     document.visibilityState === 'visible';
-
 let canvasInitialized = false;
-
 const stickman = {
     x: 0,
     y: 0,
@@ -2500,15 +2432,12 @@ const stickman = {
     chasing: false,
     dustTimer: 0
 };
-
-
 /* =====================================================
    HELPERS
    ===================================================== */
 function isDarkTheme() {
     return root.classList.contains('dark');
 }
-
 function floorY(
     height,
     size
@@ -2519,8 +2448,6 @@ function floorY(
         size / 2
     );
 }
-
-
 /* =====================================================
    DUST PARTICLES
    ===================================================== */
@@ -2531,47 +2458,37 @@ function createDustParticle() {
     ) {
         dustParticles.shift();
     }
-
     const behindX =
         stickman.x -
         stickman.facing *
         (STICKMAN_SIZE * 0.28);
-
     const ground =
         STATIC_FLOOR_Y;
-
     dustParticles.push({
         x:
             behindX +
             (Math.random() - 0.5) * 12,
-
         y:
             ground -
             Math.random() * 4,
-
         vx:
             -stickman.facing *
             (
                 0.25 +
                 Math.random() * 0.7
             ),
-
         vy:
             -(
                 0.25 +
                 Math.random() * 0.65
             ),
-
         size:
             2 +
             Math.random() * 4,
-
         life: 1,
-
         decay:
             0.025 +
             Math.random() * 0.035,
-
         color:
             DUST_COLORS[
                 Math.floor(
@@ -2581,7 +2498,6 @@ function createDustParticle() {
             ]
     });
 }
-
 function updateDust() {
     for (
         let i = dustParticles.length - 1;
@@ -2590,14 +2506,10 @@ function updateDust() {
     ) {
         const p =
             dustParticles[i];
-
         p.x += p.vx;
         p.y += p.vy;
-
         p.vy -= 0.022;
-
         p.life -= p.decay;
-
         if (p.life <= 0) {
             dustParticles.splice(
                 i,
@@ -2606,24 +2518,19 @@ function updateDust() {
         }
     }
 }
-
 function drawDust() {
     if (!dustParticles.length) {
         return;
     }
-
     ctx.save();
-
     for (const p of dustParticles) {
         ctx.globalAlpha =
             Math.max(
                 0,
                 p.life
             ) * 0.75;
-
         ctx.fillStyle =
             p.color;
-
         const size =
             Math.max(
                 5,
@@ -2632,7 +2539,6 @@ function drawDust() {
                     p.life
                 )
             );
-
         ctx.fillRect(
             Math.round(p.x),
             Math.round(p.y),
@@ -2640,28 +2546,22 @@ function drawDust() {
             size
         );
     }
-
     ctx.restore();
 }
-
 function emitChaseDust() {
     if (!stickman.chasing) {
         stickman.dustTimer = 0;
         return;
     }
-
     stickman.dustTimer--;
-
     if (stickman.dustTimer <= 0) {
         createDustParticle();
-
         if (
             Math.random() < 0.45 &&
             performanceConfig.maxDust > 20
         ) {
             createDustParticle();
         }
-
         stickman.dustTimer =
             2 +
             Math.floor(
@@ -2669,22 +2569,17 @@ function emitChaseDust() {
             );
     }
 }
-
-
 /* =====================================================
    AUDIO
    ===================================================== */
 let audioCtx = null;
 let lastChompTime = 0;
-
 function playChomp() {
     if (prefersReducedMotion) {
         return;
     }
-
     const currentTime =
         performance.now();
-
     if (
         currentTime -
         lastChompTime <
@@ -2692,96 +2587,74 @@ function playChomp() {
     ) {
         return;
     }
-
     lastChompTime =
         currentTime;
-
     try {
         if (!audioCtx) {
             const AudioContext =
                 window.AudioContext ||
                 window.webkitAudioContext;
-
             if (!AudioContext) {
                 return;
             }
-
             audioCtx =
                 new AudioContext();
         }
-
         if (
             audioCtx.state ===
             'suspended'
         ) {
             audioCtx.resume();
         }
-
         const now =
             audioCtx.currentTime;
-
         function developerChirp(
             start,
             freq
         ) {
             const osc =
                 audioCtx.createOscillator();
-
             const gain =
                 audioCtx.createGain();
-
             osc.type =
                 'square';
-
             osc.frequency.setValueAtTime(
                 freq,
                 start
             );
-
             osc.frequency.exponentialRampToValueAtTime(
                 freq * 1.25,
                 start + 0.06
             );
-
             gain.gain.setValueAtTime(
                 0.025,
                 start
             );
-
             gain.gain.exponentialRampToValueAtTime(
                 0.001,
                 start + 0.07
             );
-
             osc.connect(gain);
-
             gain.connect(
                 audioCtx.destination
             );
-
             osc.start(start);
-
             osc.stop(
                 start + 0.07
             );
         }
-
         developerChirp(
             now,
             520
         );
-
         developerChirp(
             now + 0.07,
             760
         );
-
     } catch (error) {
         audioCtx = null;
     }
 }
-
-
 /* =====================================================
    DRAW PIXEL STICKMAN DEVELOPER
    ===================================================== */
@@ -2791,247 +2664,201 @@ function drawPixelStickman(
 ) {
     const p =
         size / 16;
-
     context.save();
-
     context.translate(
         -size / 2,
         -size / 2
     );
-
-
     /* ==========================================
        HEAD
        ========================================== */
     context.fillStyle =
         '#F4C7A1';
-
     context.fillRect(
         6 * p,
         2 * p,
         5 * p,
         5 * p
     );
-
-
     /* ==========================================
        HAIR
        ========================================== */
     context.fillStyle =
         '#1F2937';
-
     context.fillRect(
         6 * p,
         2 * p,
         5 * p,
         2 * p
     );
-
     context.fillRect(
         5 * p,
         3 * p,
         2 * p,
         2 * p
     );
-
-
     /* ==========================================
        RED CAP
        ========================================== */
-
     /*
      * Cap crown.
      */
     context.fillStyle =
         '#DC2626';
-
     context.fillRect(
         5 * p,
         1 * p,
         6 * p,
         2 * p
     );
-
     context.fillRect(
         6 * p,
         0 * p,
         5 * p,
         2 * p
     );
-
     context.fillRect(
         7 * p,
         0 * p,
         3 * p,
         1 * p
     );
-
     /*
      * Cap darker underside.
      */
     context.fillStyle =
         '#991B1B';
-
     context.fillRect(
         5 * p,
         2 * p,
         7 * p,
         1 * p
     );
-
     /*
      * Cap brim.
      */
     context.fillStyle =
         '#EF4444';
-
     context.fillRect(
         3 * p,
         2 * p,
         6 * p,
         2 * p
     );
-
     context.fillRect(
         2 * p,
         3 * p,
         5 * p,
         1 * p
     );
-
     /*
      * Cap highlight.
      */
     context.fillStyle =
         '#FCA5A5';
-
     context.fillRect(
         7 * p,
         1 * p,
         2 * p,
         1 * p
     );
-
-
     /* ==========================================
        FACE
        ========================================== */
     context.fillStyle =
         '#111827';
-
     context.fillRect(
         8 * p,
         4 * p,
         1 * p,
         1 * p
     );
-
     context.fillRect(
         10 * p,
         4 * p,
         1 * p,
         1 * p
     );
-
-
     /* ==========================================
        BLUE DEVELOPER HOODIE
        ========================================== */
     context.fillStyle =
         '#2563EB';
-
     context.fillRect(
         5 * p,
         7 * p,
         7 * p,
         5 * p
     );
-
     context.fillRect(
         4 * p,
         8 * p,
         9 * p,
         3 * p
     );
-
-
     /* ==========================================
        HOODIE STRINGS
        ========================================== */
     context.fillStyle =
         '#BFDBFE';
-
     context.fillRect(
         7 * p,
         7 * p,
         1 * p,
         3 * p
     );
-
     context.fillRect(
         9 * p,
         7 * p,
         1 * p,
         3 * p
     );
-
-
     /* ==========================================
        CODE SYMBOL ON HOODIE
        ========================================== */
     context.fillStyle =
         '#FFFFFF';
-
     context.fillRect(
         6 * p,
         9 * p,
         1 * p,
         1 * p
     );
-
     context.fillRect(
         7 * p,
         10 * p,
         1 * p,
         1 * p
     );
-
     context.fillRect(
         10 * p,
         9 * p,
         1 * p,
         1 * p
     );
-
     context.fillRect(
         9 * p,
         10 * p,
         1 * p,
         1 * p
     );
-
-
     /* ==========================================
        LEFT ARM
        ========================================== */
     context.fillStyle =
         '#2563EB';
-
     context.fillRect(
         2 * p,
         8 * p,
         3 * p,
         2 * p
     );
-
     context.fillRect(
         1 * p,
         9 * p,
         3 * p,
         2 * p
     );
-
-
     /* ==========================================
        RIGHT ARM
        ========================================== */
@@ -3041,81 +2868,65 @@ function drawPixelStickman(
         3 * p,
         2 * p
     );
-
     context.fillRect(
         12 * p,
         9 * p,
         3 * p,
         2 * p
     );
-
-
     /* ==========================================
        HANDS
        ========================================== */
     context.fillStyle =
         '#F4C7A1';
-
     context.fillRect(
         1 * p,
         10 * p,
         2 * p,
         2 * p
     );
-
     context.fillRect(
         13 * p,
         10 * p,
         2 * p,
         2 * p
     );
-
-
     /* ==========================================
        LEGS
        ========================================== */
     context.fillStyle =
         '#374151';
-
     context.fillRect(
         5 * p,
         12 * p,
         3 * p,
         3 * p
     );
-
     context.fillRect(
         9 * p,
         12 * p,
         3 * p,
         3 * p
     );
-
-
     /* ==========================================
        SHOES
        ========================================== */
     context.fillStyle =
         '#111827';
-
     context.fillRect(
         4 * p,
         14 * p,
         4 * p,
         2 * p
     );
-
     context.fillRect(
         9 * p,
         14 * p,
         4 * p,
         2 * p
     );
-
     context.restore();
 }
-
-
 /* =====================================================
    DRAW PROGRAMMING ARTIFACT
    ===================================================== */
@@ -3126,260 +2937,193 @@ function drawProgrammingArtifact(
 ) {
     const p =
         size / 16;
-
     context.save();
-
     context.translate(
         -size / 2,
         -size / 2
     );
-
     /*
      * No generic square/background.
      * Each object is drawn as its own recognizable
      * programming-themed silhouette.
      */
-
     switch (artifact.name) {
-
         /* ==========================================
            AZURE
            ========================================== */
         case 'Azure': {
-
             context.fillStyle =
                 '#0078D4';
-
             context.beginPath();
-
             context.moveTo(
                 2 * p,
                 14 * p
             );
-
             context.lineTo(
                 7 * p,
                 2 * p
             );
-
             context.lineTo(
                 11 * p,
                 2 * p
             );
-
             context.lineTo(
                 15 * p,
                 14 * p
             );
-
             context.lineTo(
                 10 * p,
                 14 * p
             );
-
             context.lineTo(
                 8 * p,
                 8 * p
             );
-
             context.lineTo(
                 5 * p,
                 14 * p
             );
-
             context.closePath();
-
             context.fill();
-
             context.fillStyle =
                 '#50E6FF';
-
             context.fillRect(
                 7 * p,
                 10 * p,
                 7 * p,
                 2 * p
             );
-
             break;
         }
-
-
         /* ==========================================
            VISUAL STUDIO
            ========================================== */
         case 'Visual Studio': {
-
             context.fillStyle =
                 '#68217A';
-
             context.beginPath();
-
             context.moveTo(
                 2 * p,
                 5 * p
             );
-
             context.lineTo(
                 6 * p,
                 2 * p
             );
-
             context.lineTo(
                 14 * p,
                 4 * p
             );
-
             context.lineTo(
                 14 * p,
                 12 * p
             );
-
             context.lineTo(
                 6 * p,
                 14 * p
             );
-
             context.lineTo(
                 2 * p,
                 11 * p
             );
-
             context.lineTo(
                 4 * p,
                 9 * p
             );
-
             context.lineTo(
                 8 * p,
                 11 * p
             );
-
             context.lineTo(
                 11 * p,
                 10 * p
             );
-
             context.lineTo(
                 11 * p,
                 6 * p
             );
-
             context.lineTo(
                 8 * p,
                 5 * p
             );
-
             context.lineTo(
                 4 * p,
                 7 * p
             );
-
             context.closePath();
-
             context.fill();
-
             context.fillStyle =
                 '#C586C0';
-
             context.fillRect(
                 8 * p,
                 6 * p,
                 3 * p,
                 4 * p
             );
-
             break;
         }
-
-
         /* ==========================================
            CODE / </> 
            ========================================== */
         case 'Code': {
-
             context.strokeStyle =
                 '#007ACC';
-
             context.lineWidth =
                 2.2 * p;
-
             context.lineCap =
                 'square';
-
             context.lineJoin =
                 'miter';
-
             context.beginPath();
-
             context.moveTo(
                 6 * p,
                 4 * p
             );
-
             context.lineTo(
                 2 * p,
                 8 * p
             );
-
             context.lineTo(
                 6 * p,
                 12 * p
             );
-
             context.stroke();
-
             context.beginPath();
-
             context.moveTo(
                 10 * p,
                 4 * p
             );
-
             context.lineTo(
                 14 * p,
                 8 * p
             );
-
             context.lineTo(
                 10 * p,
                 12 * p
             );
-
             context.stroke();
-
             context.strokeStyle =
                 '#FFFFFF';
-
             context.beginPath();
-
             context.moveTo(
                 9 * p,
                 3 * p
             );
-
             context.lineTo(
                 7 * p,
                 13 * p
             );
-
             context.stroke();
-
             break;
         }
-
-
         /* ==========================================
            AI
            ========================================== */
         case 'AI': {
-
             context.strokeStyle =
                 '#8B5CF6';
-
             context.lineWidth =
                 1.5 * p;
-
             const nodes = [
                 [4, 4],
                 [4, 12],
@@ -3387,56 +3131,44 @@ function drawProgrammingArtifact(
                 [12, 4],
                 [12, 12]
             ];
-
             /*
              * Neural network connections.
              */
             context.beginPath();
-
             context.moveTo(
                 4 * p,
                 4 * p
             );
-
             context.lineTo(
                 8 * p,
                 8 * p
             );
-
             context.lineTo(
                 4 * p,
                 12 * p
             );
-
             context.moveTo(
                 8 * p,
                 8 * p
             );
-
             context.lineTo(
                 12 * p,
                 4 * p
             );
-
             context.moveTo(
                 8 * p,
                 8 * p
             );
-
             context.lineTo(
                 12 * p,
                 12 * p
             );
-
             context.stroke();
-
             context.fillStyle =
                 '#C4B5FD';
-
             nodes.forEach(
                 ([x, y]) => {
                     context.beginPath();
-
                     context.arc(
                         x * p,
                         y * p,
@@ -3444,82 +3176,60 @@ function drawProgrammingArtifact(
                         0,
                         Math.PI * 2
                     );
-
                     context.fill();
                 }
             );
-
             break;
         }
-
-
         /* ==========================================
            GIT
            ========================================== */
         case 'Git': {
-
             context.fillStyle =
                 '#F05032';
-
             context.beginPath();
-
             context.moveTo(
                 8 * p,
                 1 * p
             );
-
             context.lineTo(
                 15 * p,
                 8 * p
             );
-
             context.lineTo(
                 8 * p,
                 15 * p
             );
-
             context.lineTo(
                 1 * p,
                 8 * p
             );
-
             context.closePath();
-
             context.fill();
-
             context.strokeStyle =
                 '#FFFFFF';
-
             context.lineWidth =
                 1.4 * p;
-
             context.beginPath();
-
             context.moveTo(
                 6 * p,
                 5 * p
             );
-
             context.lineTo(
                 6 * p,
                 11 * p
             );
-
             context.moveTo(
                 6 * p,
                 8 * p
             );
-
             context.lineTo(
                 11 * p,
                 5 * p
             );
-
             context.stroke();
-
             context.fillStyle =
                 '#FFFFFF';
-
             [
                 [6, 5],
                 [6, 11],
@@ -3527,7 +3237,6 @@ function drawProgrammingArtifact(
             ].forEach(
                 ([x, y]) => {
                     context.beginPath();
-
                     context.arc(
                         x * p,
                         y * p,
@@ -3535,74 +3244,56 @@ function drawProgrammingArtifact(
                         0,
                         Math.PI * 2
                     );
-
                     context.fill();
                 }
             );
-
             break;
         }
-
-
         /* ==========================================
            TERMINAL
            ========================================== */
         case 'Terminal': {
-
             context.fillStyle =
                 '#111827';
-
             context.fillRect(
                 1 * p,
                 3 * p,
                 14 * p,
                 10 * p
             );
-
             context.strokeStyle =
                 '#4B5563';
-
             context.lineWidth =
                 0.7 * p;
-
             context.strokeRect(
                 1 * p,
                 3 * p,
                 14 * p,
                 10 * p
             );
-
             context.fillStyle =
                 '#22C55E';
-
             /*
              * Terminal prompt.
              */
             context.beginPath();
-
             context.moveTo(
                 3 * p,
                 6 * p
             );
-
             context.lineTo(
                 6 * p,
                 8 * p
             );
-
             context.lineTo(
                 3 * p,
                 10 * p
             );
-
             context.strokeStyle =
                 '#22C55E';
-
             context.lineWidth =
                 1.4 * p;
-
             context.stroke();
-
             /*
              * Cursor.
              */
@@ -3612,21 +3303,15 @@ function drawProgrammingArtifact(
                 4 * p,
                 1 * p
             );
-
             break;
         }
-
-
         /* ==========================================
            CLOUD
            ========================================== */
         case 'Cloud': {
-
             context.fillStyle =
                 '#2563EB';
-
             context.beginPath();
-
             context.arc(
                 5.5 * p,
                 9 * p,
@@ -3634,7 +3319,6 @@ function drawProgrammingArtifact(
                 Math.PI,
                 Math.PI * 2
             );
-
             context.arc(
                 9.5 * p,
                 7.5 * p,
@@ -3642,7 +3326,6 @@ function drawProgrammingArtifact(
                 Math.PI,
                 Math.PI * 2
             );
-
             context.arc(
                 12 * p,
                 10 * p,
@@ -3650,40 +3333,30 @@ function drawProgrammingArtifact(
                 Math.PI,
                 Math.PI * 2
             );
-
             context.fillRect(
                 3 * p,
                 8 * p,
                 11 * p,
                 5 * p
             );
-
             context.fill();
-
             context.fillStyle =
                 '#BFDBFE';
-
             context.fillRect(
                 6 * p,
                 11 * p,
                 5 * p,
                 1 * p
             );
-
             break;
         }
-
-
         /* ==========================================
            DATABASE
            ========================================== */
         case 'Database': {
-
             context.fillStyle =
                 '#0891B2';
-
             context.beginPath();
-
             context.ellipse(
                 8 * p,
                 4 * p,
@@ -3693,18 +3366,14 @@ function drawProgrammingArtifact(
                 0,
                 Math.PI * 2
             );
-
             context.fill();
-
             context.fillRect(
                 3 * p,
                 4 * p,
                 10 * p,
                 8 * p
             );
-
             context.beginPath();
-
             context.ellipse(
                 8 * p,
                 12 * p,
@@ -3714,17 +3383,12 @@ function drawProgrammingArtifact(
                 0,
                 Math.PI * 2
             );
-
             context.fill();
-
             context.strokeStyle =
                 '#67E8F9';
-
             context.lineWidth =
                 1 * p;
-
             context.beginPath();
-
             context.ellipse(
                 8 * p,
                 6 * p,
@@ -3734,67 +3398,51 @@ function drawProgrammingArtifact(
                 0,
                 Math.PI * 2
             );
-
             context.stroke();
-
             break;
         }
-
-
         /* ==========================================
            API / JSON
            ========================================== */
         case 'API': {
-
             context.strokeStyle =
                 '#059669';
-
             context.lineWidth =
                 1.7 * p;
-
             context.lineCap =
                 'square';
-
             /*
              * Left brace.
              */
             context.beginPath();
-
             context.moveTo(
                 6 * p,
                 3 * p
             );
-
             context.lineTo(
                 4 * p,
                 3 * p
             );
-
             context.lineTo(
                 4 * p,
                 7 * p
             );
-
             context.lineTo(
                 2 * p,
                 8 * p
             );
-
             context.lineTo(
                 4 * p,
                 9 * p
             );
-
             context.lineTo(
                 4 * p,
                 13 * p
             );
-
             context.lineTo(
                 6 * p,
                 13 * p
             );
-
             /*
              * Right brace.
              */
@@ -3802,64 +3450,50 @@ function drawProgrammingArtifact(
                 10 * p,
                 3 * p
             );
-
             context.lineTo(
                 12 * p,
                 3 * p
             );
-
             context.lineTo(
                 12 * p,
                 7 * p
             );
-
             context.lineTo(
                 14 * p,
                 8 * p
             );
-
             context.lineTo(
                 12 * p,
                 9 * p
             );
-
             context.lineTo(
                 12 * p,
                 13 * p
             );
-
             context.lineTo(
                 10 * p,
                 13 * p
             );
-
             context.stroke();
-
             /*
              * API connection dots.
              */
             context.fillStyle =
                 '#A7F3D0';
-
             context.fillRect(
                 7 * p,
                 7 * p,
                 2 * p,
                 2 * p
             );
-
             break;
         }
-
-
         /* ==========================================
            BUG
            ========================================== */
         case 'Bug': {
-
             context.fillStyle =
                 '#DC2626';
-
             /*
              * Body.
              */
@@ -3869,9 +3503,7 @@ function drawProgrammingArtifact(
                 5 * p,
                 7 * p
             );
-
             context.beginPath();
-
             context.arc(
                 8.5 * p,
                 5 * p,
@@ -3879,114 +3511,89 @@ function drawProgrammingArtifact(
                 Math.PI,
                 Math.PI * 2
             );
-
             context.fill();
-
             /*
              * Legs.
              */
             context.strokeStyle =
                 '#DC2626';
-
             context.lineWidth =
                 1.3 * p;
-
             context.beginPath();
-
             context.moveTo(
                 6 * p,
                 7 * p
             );
-
             context.lineTo(
                 2 * p,
                 5 * p
             );
-
             context.moveTo(
                 6 * p,
                 9 * p
             );
-
             context.lineTo(
                 2 * p,
                 9 * p
             );
-
             context.moveTo(
                 6 * p,
                 11 * p
             );
-
             context.lineTo(
                 2 * p,
                 13 * p
             );
-
             context.moveTo(
                 11 * p,
                 7 * p
             );
-
             context.lineTo(
                 15 * p,
                 5 * p
             );
-
             context.moveTo(
                 11 * p,
                 9 * p
             );
-
             context.lineTo(
                 15 * p,
                 9 * p
             );
-
             context.moveTo(
                 11 * p,
                 11 * p
             );
-
             context.lineTo(
                 15 * p,
                 13 * p
             );
-
             context.stroke();
-
             /*
              * Eyes.
              */
             context.fillStyle =
                 '#FFFFFF';
-
             context.fillRect(
                 7 * p,
                 5 * p,
                 1 * p,
                 1 * p
             );
-
             context.fillRect(
                 9 * p,
                 5 * p,
                 1 * p,
                 1 * p
             );
-
             break;
         }
-
-
         /* ==========================================
            DOCKER
            ========================================== */
         case 'Docker': {
-
             context.fillStyle =
                 '#2496ED';
-
             /*
              * Container blocks.
              */
@@ -3999,7 +3606,6 @@ function drawProgrammingArtifact(
                 [8, 5],
                 [11, 5]
             ];
-
             blocks.forEach(
                 ([x, y]) => {
                     context.fillRect(
@@ -4010,7 +3616,6 @@ function drawProgrammingArtifact(
                     );
                 }
             );
-
             /*
              * Whale body.
              */
@@ -4020,134 +3625,107 @@ function drawProgrammingArtifact(
                 10 * p,
                 2 * p
             );
-
             context.fillRect(
                 4 * p,
                 13 * p,
                 6 * p,
                 1 * p
             );
-
             /*
              * Whale tail.
              */
             context.beginPath();
-
             context.moveTo(
                 12 * p,
                 11 * p
             );
-
             context.lineTo(
                 15 * p,
                 9 * p
             );
-
             context.lineTo(
                 14 * p,
                 13 * p
             );
-
             context.closePath();
-
             context.fill();
-
             break;
         }
-
-
         /* ==========================================
            PYTHON
            ========================================== */
         case 'Python': {
-
             /*
              * Blue snake.
              */
             context.fillStyle =
                 '#3776AB';
-
             context.fillRect(
                 3 * p,
                 2 * p,
                 7 * p,
                 5 * p
             );
-
             context.fillRect(
                 2 * p,
                 4 * p,
                 4 * p,
                 5 * p
             );
-
             context.fillStyle =
                 '#FFD43B';
-
             context.fillRect(
                 6 * p,
                 9 * p,
                 7 * p,
                 5 * p
             );
-
             context.fillRect(
                 10 * p,
                 7 * p,
                 4 * p,
                 5 * p
             );
-
             /*
              * Python eyes.
              */
             context.fillStyle =
                 '#FFFFFF';
-
             context.fillRect(
                 8 * p,
                 3 * p,
                 1 * p,
                 1 * p
             );
-
             context.fillRect(
                 11 * p,
                 11 * p,
                 1 * p,
                 1 * p
             );
-
             break;
         }
     }
-
     context.restore();
 }
-
-
 /* =====================================================
    DROP PROGRAMMING ARTIFACTS
    ===================================================== */
 function dropArtifacts() {
     const maxArtifacts =
         performanceConfig.maxArtifacts;
-
     const room =
         maxArtifacts -
         artifacts.length;
-
     if (room <= 0) {
         return;
     }
-
     const maximumNewArtifacts =
         smallMobileQuery.matches
             ? 3
             : mobileQuery.matches
                 ? 5
                 : 8;
-
     const count =
         Math.min(
             room,
@@ -4156,10 +3734,8 @@ function dropArtifacts() {
                 maximumNewArtifacts
             ) + 1
         );
-
     const w =
         window.innerWidth;
-
     for (
         let i = 0;
         i < count;
@@ -4172,7 +3748,6 @@ function dropArtifacts() {
                     ARTIFACT_TYPES.length
                 )
             ];
-
         artifacts.push({
             x:
                 36 +
@@ -4181,43 +3756,33 @@ function dropArtifacts() {
                     40,
                     w - 72
                 ),
-
             y:
                 -ARTIFACT_SIZE -
                 Math.random() * 220 -
                 i * 28,
-
             vx:
                 (
                     Math.random() -
                     0.5
                 ) * 2.2,
-
             vy:
                 0.4 +
                 Math.random() * 1.2,
-
             angle:
                 Math.random() *
                 Math.PI *
                 2,
-
             spin:
                 (
                     Math.random() -
                     0.5
                 ) * 0.14,
-
             artifact,
-
             eaten: 0
         });
     }
-
     ensureAnimationRunning();
 }
-
-
 /* =====================================================
    PICK NEXT ARTIFACT
    ===================================================== */
@@ -4226,14 +3791,11 @@ function pickPrey() {
         artifacts.filter(
             d => !d.eaten
         );
-
     if (!live.length) {
         return null;
     }
-
     let lowest =
         live[0];
-
     for (const d of live) {
         if (
             d.y >
@@ -4242,16 +3804,13 @@ function pickPrey() {
             lowest = d;
         }
     }
-
     let best =
         lowest;
-
     let bestDx =
         Math.abs(
             lowest.x -
             stickman.x
         );
-
     for (const d of live) {
         if (
             lowest.y -
@@ -4260,13 +3819,11 @@ function pickPrey() {
         ) {
             continue;
         }
-
         const dx =
             Math.abs(
                 d.x -
                 stickman.x
             );
-
         if (
             dx <
             bestDx
@@ -4275,11 +3832,8 @@ function pickPrey() {
             best = d;
         }
     }
-
     return best;
 }
-
-
 /* =====================================================
    UPDATE STICKMAN
    ===================================================== */
@@ -4292,50 +3846,40 @@ function updateStickman(
             h,
             STICKMAN_SIZE
         );
-
     const prey =
         pickPrey();
-
     const margin =
         STICKMAN_SIZE / 2 +
         8;
-
     stickman.chasing =
         false;
-
     if (prey) {
         const dx =
             prey.x -
             stickman.x;
-
         const speed =
             performanceConfig.stickmanSpeed;
-
         if (
             Math.abs(dx) >
             3
         ) {
             stickman.chasing =
                 true;
-
             stickman.facing =
                 dx > 0
                     ? 1
                     : -1;
-
             stickman.x +=
                 stickman.facing *
                 Math.min(
                     speed,
                     Math.abs(dx)
                 );
-
             stickman.walk +=
                 0.35;
         }
     } else {
         stickman.roamTimer--;
-
         if (
             stickman.roamTimer <=
             0
@@ -4345,7 +3889,6 @@ function updateStickman(
                 0.5
                     ? -1
                     : 1;
-
             stickman.roamSpeed =
                 performanceConfig.roamMin +
                 Math.random() *
@@ -4353,58 +3896,45 @@ function updateStickman(
                     performanceConfig.roamMax -
                     performanceConfig.roamMin
                 );
-
             stickman.roamTimer =
                 80 +
                 Math.random() *
                 160;
         }
-
         stickman.x +=
             stickman.facing *
             stickman.roamSpeed;
-
         stickman.walk +=
             0.12;
     }
-
     if (
         stickman.x <
         margin
     ) {
         stickman.x =
             margin;
-
         stickman.facing =
             1;
-
         stickman.roamTimer =
             40;
-
     } else if (
         stickman.x >
         w - margin
     ) {
         stickman.x =
             w - margin;
-
         stickman.facing =
             -1;
-
         stickman.roamTimer =
             40;
     }
-
     stickman.y =
         y +
         Math.sin(
             stickman.walk * 2
         ) * 2;
-
     emitChaseDust();
 }
-
-
 /* =====================================================
    UPDATE ARTIFACTS
    ===================================================== */
@@ -4414,13 +3944,11 @@ function updateArtifacts(
 ) {
     const ground =
         STATIC_FLOOR_Y;
-
     const stickmanReachY =
         floorY(
             h,
             STICKMAN_SIZE
         );
-
     for (
         let i = artifacts.length - 1;
         i >= 0;
@@ -4428,13 +3956,11 @@ function updateArtifacts(
     ) {
         const d =
             artifacts[i];
-
         /*
          * Collected artifact animation.
          */
         if (d.eaten) {
             d.eaten += 1;
-
             if (
                 d.eaten >
                 10
@@ -4444,32 +3970,23 @@ function updateArtifacts(
                     1
                 );
             }
-
             continue;
         }
-
         /*
          * Gravity.
          */
         d.vy +=
             0.28;
-
         d.vx *=
             0.995;
-
         d.x +=
             d.vx;
-
         d.y +=
             d.vy;
-
         d.angle +=
             d.spin;
-
         d.spin *=
             0.99;
-
-
         /*
          * Horizontal collision.
          */
@@ -4479,12 +3996,10 @@ function updateArtifacts(
         ) {
             d.x =
                 ARTIFACT_SIZE / 2;
-
             d.vx =
                 Math.abs(
                     d.vx
                 ) * 0.6;
-
         } else if (
             d.x >
             w -
@@ -4493,14 +4008,11 @@ function updateArtifacts(
             d.x =
                 w -
                 ARTIFACT_SIZE / 2;
-
             d.vx =
                 -Math.abs(
                     d.vx
                 ) * 0.6;
         }
-
-
         /*
          * Floor collision.
          */
@@ -4510,16 +4022,12 @@ function updateArtifacts(
         ) {
             d.y =
                 ground;
-
             d.vy =
                 -d.vy * 0.32;
-
             d.vx *=
                 0.82;
-
             d.spin +=
                 d.vx * 0.01;
-
             if (
                 Math.abs(
                     d.vy
@@ -4528,8 +4036,6 @@ function updateArtifacts(
                 d.vy = 0;
             }
         }
-
-
         /*
          * Stickman collision.
          */
@@ -4537,7 +4043,6 @@ function updateArtifacts(
             d.y >
             stickmanReachY -
             36;
-
         const hit =
             Math.hypot(
                 d.x -
@@ -4547,21 +4052,16 @@ function updateArtifacts(
             ) <
             STICKMAN_SIZE * 0.42 +
             ARTIFACT_SIZE * 0.42;
-
         if (
             nearFloor &&
             hit
         ) {
             d.eaten =
                 1;
-
             playChomp();
-
             chomp =
                 8;
-
             eatenCount++;
-
             if (countElement) {
                 countElement.textContent =
                     eatenCount +
@@ -4574,8 +4074,6 @@ function updateArtifacts(
         }
     }
 }
-
-
 /* =====================================================
    DRAW SHADOW
    ===================================================== */
@@ -4586,14 +4084,11 @@ function drawShadow(
     ry
 ) {
     ctx.save();
-
     ctx.fillStyle =
         isDarkTheme()
             ? 'rgba(100, 100, 100, 0.45)'
             : 'rgba(15,23,42,0.16)';
-
     ctx.beginPath();
-
     ctx.ellipse(
         x,
         y,
@@ -4603,13 +4098,9 @@ function drawShadow(
         0,
         Math.PI * 2
     );
-
     ctx.fill();
-
     ctx.restore();
 }
-
-
 /* =====================================================
    CANVAS RESIZE
    ===================================================== */
@@ -4618,7 +4109,6 @@ let canvasHeight = 0;
 let canvasDpr = 1;
 let canvasPixelWidth = 0;
 let canvasPixelHeight = 0;
-
 function resizeCanvas() {
     if (
         !canvas ||
@@ -4626,40 +4116,32 @@ function resizeCanvas() {
     ) {
         return;
     }
-
     performanceConfig =
         getPerformanceConfig();
-
     const rect =
         canvas.getBoundingClientRect();
-
     canvasWidth =
         Math.max(
             1,
             Math.round(rect.width)
         );
-
     canvasHeight =
         Math.max(
             1,
             Math.round(rect.height)
         );
-
     canvasDpr =
         performanceConfig.dpr;
-
     const nextPixelWidth =
         Math.round(
             canvasWidth *
             canvasDpr
         );
-
     const nextPixelHeight =
         Math.round(
             canvasHeight *
             canvasDpr
         );
-
     if (
         canvasPixelWidth !==
         nextPixelWidth ||
@@ -4668,17 +4150,13 @@ function resizeCanvas() {
     ) {
         canvas.width =
             nextPixelWidth;
-
         canvas.height =
             nextPixelHeight;
-
         canvasPixelWidth =
             nextPixelWidth;
-
         canvasPixelHeight =
             nextPixelHeight;
     }
-
     ctx.setTransform(
         canvasDpr,
         0,
@@ -4687,19 +4165,15 @@ function resizeCanvas() {
         0,
         0
     );
-
     ctx.imageSmoothingEnabled =
         false;
 }
-
-
 /* =====================================================
    RENDER
    ===================================================== */
 function render() {
     animationFrame =
         null;
-
     if (
         !pageVisible ||
         !canvas ||
@@ -4707,23 +4181,17 @@ function render() {
     ) {
         return;
     }
-
     resizeCanvas();
-
     const w =
         canvasWidth;
-
     const h =
         canvasHeight;
-
     ctx.clearRect(
         0,
         0,
         w,
         h
     );
-
-
     /*
      * Physics.
      */
@@ -4731,26 +4199,20 @@ function render() {
         w,
         h
     );
-
     updateStickman(
         w,
         h
     );
-
     updateDust();
-
     if (
         chomp > 0
     ) {
         chomp--;
     }
-
     const groundLine =
         h -
         FLOOR_MARGIN +
         2;
-
-
     /* =================================================
        PROGRAMMING ARTIFACTS
        ================================================= */
@@ -4766,7 +4228,6 @@ function render() {
                     10
                 )
                 : 1;
-
         drawShadow(
             d.x,
             groundLine,
@@ -4776,40 +4237,30 @@ function render() {
             6 *
                 scale
         );
-
         ctx.save();
-
         ctx.translate(
             d.x,
             d.y
         );
-
         ctx.rotate(
             d.angle *
             0.35
         );
-
         ctx.scale(
             scale,
             scale
         );
-
         drawProgrammingArtifact(
             ctx,
             ARTIFACT_SIZE,
             d.artifact
         );
-
         ctx.restore();
     }
-
-
     /*
      * Dust behind developer.
      */
     drawDust();
-
-
     /* =================================================
        STICKMAN DEVELOPER
        ================================================= */
@@ -4825,7 +4276,6 @@ function render() {
               ) *
               0.08
             : 1;
-
     drawShadow(
         stickman.x,
         groundLine,
@@ -4833,21 +4283,17 @@ function render() {
             0.42,
         7
     );
-
     ctx.save();
-
     ctx.translate(
         stickman.x,
         stickman.y
     );
-
     ctx.scale(
         stickman.facing *
             squash,
         2 -
             squash
     );
-
     ctx.rotate(
         Math.sin(
             stickman.walk
@@ -4855,15 +4301,11 @@ function render() {
         0.06 *
         stickman.facing
     );
-
     drawPixelStickman(
         ctx,
         STICKMAN_SIZE
     );
-
     ctx.restore();
-
-
     /*
      * Continue animation.
      */
@@ -4877,8 +4319,6 @@ function render() {
             );
     }
 }
-
-
 /* =====================================================
    ANIMATION CONTROL
    ===================================================== */
@@ -4890,7 +4330,6 @@ function ensureAnimationRunning() {
     ) {
         return;
     }
-
     if (
         animationFrame === null
     ) {
@@ -4900,7 +4339,6 @@ function ensureAnimationRunning() {
             );
     }
 }
-
 function stopAnimation() {
     if (
         animationFrame !== null
@@ -4908,13 +4346,10 @@ function stopAnimation() {
         cancelAnimationFrame(
             animationFrame
         );
-
         animationFrame =
             null;
     }
 }
-
-
 /* =====================================================
    PAGE VISIBILITY
    ===================================================== */
@@ -4924,7 +4359,6 @@ document.addEventListener(
         pageVisible =
             document.visibilityState ===
             'visible';
-
         if (pageVisible) {
             ensureAnimationRunning();
         } else {
@@ -4932,8 +4366,6 @@ document.addEventListener(
         }
     }
 );
-
-
 /* =====================================================
    INITIALIZE CANVAS
    ===================================================== */
@@ -4942,30 +4374,23 @@ function initDeveloperChase() {
         document.getElementById(
             'canvas-container'
         );
-
     if (!container) {
         return;
     }
-
     canvas =
         document.createElement(
             'canvas'
         );
-
     canvas.setAttribute(
         'aria-hidden',
         'true'
     );
-
     canvas.style.width =
         '100%';
-
     canvas.style.height =
         '100%';
-
     canvas.style.display =
         'block';
-
     ctx =
         canvas.getContext(
             '2d',
@@ -4975,34 +4400,25 @@ function initDeveloperChase() {
                     !mobileQuery.matches
             }
         );
-
     if (!ctx) {
         return;
     }
-
     ctx.imageSmoothingEnabled =
         false;
-
     container.appendChild(
         canvas
     );
-
     stickman.x =
         window.innerWidth *
         0.35;
-
     stickman.y =
         floorY(
             window.innerHeight,
             STICKMAN_SIZE
         );
-
     canvasInitialized =
         true;
-
     resizeCanvas();
-
-
     /*
      * Keep your existing HTML button ID.
      */
@@ -5010,15 +4426,12 @@ function initDeveloperChase() {
         document.getElementById(
             'duck-quack-btn'
         );
-
     if (artifactButton) {
         artifactButton.addEventListener(
             'click',
             dropArtifacts
         );
     }
-
-
     /*
      * Normal animation.
      */
@@ -5030,8 +4443,6 @@ function initDeveloperChase() {
         renderStaticStickman();
     }
 }
-
-
 /* =====================================================
    STATIC REDUCED-MOTION RENDER
    ===================================================== */
@@ -5042,75 +4453,58 @@ function renderStaticStickman() {
     ) {
         return;
     }
-
     resizeCanvas();
-
     const w =
         canvasWidth;
-
     const h =
         canvasHeight;
-
     ctx.clearRect(
         0,
         0,
         w,
         h
     );
-
     stickman.y =
         floorY(
             h,
             STICKMAN_SIZE
         );
-
     drawShadow(
         stickman.x,
         h - FLOOR_MARGIN + 2,
         STICKMAN_SIZE * 0.42,
         7
     );
-
     ctx.save();
-
     ctx.translate(
         stickman.x,
         stickman.y
     );
-
     ctx.scale(
         stickman.facing,
         1
     );
-
     drawPixelStickman(
         ctx,
         STICKMAN_SIZE
     );
-
     ctx.restore();
 }
-
-
 /* =====================================================
    RESIZE
    ===================================================== */
 let resizeTimeout = null;
-
 function handleCanvasViewportResize() {
     if (!canvasInitialized) {
         return;
     }
-
     clearTimeout(
         resizeTimeout
     );
-
     resizeTimeout =
         setTimeout(
             () => {
                 resizeCanvas();
-
                 if (
                     prefersReducedMotion
                 ) {
@@ -5122,7 +4516,6 @@ function handleCanvasViewportResize() {
             100
         );
 }
-
 window.addEventListener(
     'resize',
     handleCanvasViewportResize,
@@ -5130,7 +4523,6 @@ window.addEventListener(
         passive: true
     }
 );
-
 if (window.visualViewport) {
     window.visualViewport.addEventListener(
         'resize',
@@ -5140,8 +4532,6 @@ if (window.visualViewport) {
         }
     );
 }
-
-
 /* =====================================================
    START
    ===================================================== */
