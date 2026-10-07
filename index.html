@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth panel-scroll">
 <head>
     <meta charset="UTF-8">
     <meta
@@ -14,7 +14,8 @@
         name="theme-color"
         content="#f8fafc"
     >
-    <title>Senior Software Engineer & BIM Engineering Leader Portfolio</title>
+    <link rel="icon" type="image/png" href="hero.png">
+    <title>Senior Software Engineer &amp; BIM Engineering Leader Portfolio</title>
     <!-- =========================================================
          TAILWIND
          ========================================================= -->
@@ -73,20 +74,51 @@
          CUSTOM CSS
          ========================================================= -->
     <style>
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: calc(
+        :root {
+            --site-chrome-top: calc(
                 5.5rem + env(safe-area-inset-top, 0px)
             );
+            --site-chrome-bottom: calc(
+                2.75rem + env(safe-area-inset-bottom, 0px)
+            );
+            --panel-height: calc(
+                100svh - var(--site-chrome-top) - var(--site-chrome-bottom)
+            );
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--site-chrome-top);
+        }
+        html.panel-scroll {
+            scroll-snap-type: y mandatory;
         }
         body {
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
+        #main-content > section {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            height: var(--panel-height);
+            min-height: var(--panel-height);
+            max-height: var(--panel-height);
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior-y: contain;
+            -webkit-overflow-scrolling: touch;
+        }
         section {
-            scroll-margin-top: calc(
-                5.5rem + env(safe-area-inset-top, 0px)
-            );
+            scroll-margin-top: var(--site-chrome-top);
+        }
+        .nav-link-active,
+        .mobile-nav-link-active {
+            background: rgb(241 245 249);
+            color: rgb(2 132 199);
+        }
+        .dark .nav-link-active,
+        .dark .mobile-nav-link-active {
+            background: rgb(30 41 59 / 0.6);
+            color: rgb(56 189 248);
         }
         #navbar {
             padding-top: env(safe-area-inset-top, 0px);
@@ -94,16 +126,8 @@
             padding-right: env(safe-area-inset-right, 0px);
         }
         #main-content {
-            padding-bottom: calc(
-                6.5rem + env(safe-area-inset-bottom, 0px)
-            );
-        }
-        @media (min-width: 640px) {
-            #main-content {
-                padding-bottom: calc(
-                    7.5rem + env(safe-area-inset-bottom, 0px)
-                );
-            }
+            padding-top: var(--site-chrome-top);
+            padding-bottom: var(--site-chrome-bottom);
         }
         .site-footer {
             padding-bottom: max(
@@ -299,6 +323,16 @@
                 border: 1px solid #ccc !important;
                 box-shadow: none !important;
                 backdrop-filter: none !important;
+            }
+            html.panel-scroll {
+                scroll-snap-type: none;
+            }
+            #main-content > section {
+                height: auto;
+                min-height: auto;
+                max-height: none;
+                overflow: visible;
+                scroll-snap-align: none;
             }
             section {
                 break-inside: avoid;
@@ -675,9 +709,6 @@
             px-4
             sm:px-6
             lg:px-8
-            pt-24
-            space-y-16
-            lg:space-y-24
         "
     >
         <!-- =====================================================
@@ -686,7 +717,6 @@
         <section
             id="overview"
             class="
-                hero-height
                 flex
                 flex-col
                 justify-center
@@ -837,82 +867,226 @@
                         deliver end-to-end impact.
                     </p>
                 </div>
-                <!-- =================================================
-                     PROFILE HIGHLIGHTS
-                     ================================================= -->
-                <div
-                    class="
-                        lg:col-span-4
-                        glass-card
-                        p-4
-                        sm:p-6
-                        rounded-2xl
-                        space-y-4
-                        w-full
-                    "
-                >
-                    <h3
-                        class="
-                            text-xs
-                            font-bold
-                            text-slate-400
-                            uppercase
-                            tracking-wider
-                        "
-                    >
-                        Profile Highlights
-                    </h3>
-                    <div class="space-y-3 text-sm">
-                        <div class="profile-highlight-row">
-                            <span class="text-slate-500 dark:text-slate-400">
-                                Education
-                            </span>
-                            <span class="profile-highlight-value">
-                                B.Eng. Civil Engineering
-                            </span>
-                        </div>
-                        <div class="profile-highlight-row">
-                            <span class="text-slate-500 dark:text-slate-400">
-                                A-Insinöörit Tenure
-                            </span>
-                            <span class="profile-highlight-value">
-                                10 Years
-                            </span>
-                        </div>
-                        <div class="profile-highlight-row">
-                            <span class="text-slate-500 dark:text-slate-400">
-                                Software Experience
-                            </span>
-                            <span class="profile-highlight-value">
-                                12 Years Professional
-                            </span>
-                        </div>
-                        <div class="profile-highlight-row">
-                            <span class="text-slate-500 dark:text-slate-400">
-                                Key Ecosystem
-                            </span>
-                            <span class="profile-highlight-value">
-                                Tekla, Azure, .NET, React
-                            </span>
-                        </div>
-                        <div class="profile-highlight-row">
-                            <span class="text-slate-500 dark:text-slate-400">
-                                Solved Tasks
-                            </span>
-                            <span
-                                id="artifact-count"
-                                class="
-                                    profile-highlight-value
-                                    font-bold
-                                    text-amber-500
-                                    text-base
-                                "
-                            >
-                                0 Items
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                
+				
+				
+				
+				
+		<!-- ================================================= 
+			 PROFILE HIGHLIGHTS + SOCIAL LINKS
+			 ================================================= -->
+		<div class="lg:col-span-4 space-y-4">
+
+			<!-- ABOUT ME -->
+			<div 
+				class=" 
+					glass-card 
+					p-4 
+					sm:p-6 
+					rounded-2xl 
+					space-y-4 
+					w-full 
+				" 
+			> 
+				<h3 
+					class=" 
+						text-xs 
+						font-bold 
+						text-slate-400 
+						uppercase 
+						tracking-wider 
+					" 
+				> 
+					About Me 
+				</h3> 
+
+				<div class="space-y-1 text-sm"> 
+					<div class="profile-highlight-row"> 
+						<span class="text-slate-500 dark:text-slate-400"> 
+							Name 
+						</span> 
+						<span class="profile-highlight-value"> 
+							Jussi Junkkarinen
+						</span> 
+					</div>
+					<div class="profile-highlight-row"> 
+						<span class="text-slate-500 dark:text-slate-400"> 
+							Location 
+						</span> 
+						<span class="profile-highlight-value"> 
+							Finland
+						</span> 
+					</div>
+					<div class="profile-highlight-row"> 
+						<span class="text-slate-500 dark:text-slate-400"> 
+							Current Role 
+						</span> 
+						<span class="profile-highlight-value"> 
+							Senior BIM Developer
+						</span> 
+					</div>
+					<div class="profile-highlight-row"> 
+						<span class="text-slate-500 dark:text-slate-400"> 
+							Background 
+						</span> 
+						<span class="profile-highlight-value"> 
+							Software Engineering · Civil Engineering · BIM
+						</span> 
+					</div>
+					<div class="profile-highlight-row"> 
+						<span class="text-slate-500 dark:text-slate-400"> 
+							Experience 
+						</span> 
+						<span class="profile-highlight-value"> 
+							12+ years · Engineering · BIM · Software Development
+						</span> 
+					</div>
+					<div class="profile-highlight-row"> 
+						<span class="text-slate-500 dark:text-slate-400"> 
+							Current Employer 
+						</span> 
+						<span class="profile-highlight-value"> 
+							AINS Group · Finland
+						</span> 
+					</div>
+					<div class="profile-highlight-row"> 
+						<span class="text-slate-500 dark:text-slate-400"> 
+							Languages 
+						</span> 
+						<span class="profile-highlight-value"> 
+							English · Finnish
+						</span> 
+					</div>
+
+					<div class="profile-highlight-row"> 
+						<span class="text-slate-500 dark:text-slate-400"> 
+							Solved Tasks 
+						</span> 
+						<span 
+							id="artifact-count" 
+							class=" 
+								profile-highlight-value 
+								font-bold 
+								text-amber-500 
+								text-base 
+							" 
+						> 
+							0 Items 
+						</span> 
+					</div> 
+				</div> 
+			</div>
+
+
+			<!-- SOCIAL LINKS -->
+			<div 
+				class=" 
+					glass-card 
+					p-4 
+					sm:p-6 
+					rounded-2xl 
+					space-y-1 
+					w-full 
+				"
+			>
+				<h3 
+					class=" 
+						text-xs 
+						font-bold 
+						text-slate-400 
+						uppercase 
+						tracking-wider 
+					"
+				>
+					Connect
+				</h3>
+
+				<!-- LinkedIn -->
+				<a 
+					href="https://www.linkedin.com/in/jussi-junkkarinen-34313986/?isSelfProfile=true"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="LinkedIn"
+					class="
+						flex
+						items-center
+						gap-3
+						w-full
+						px-3
+						py-1.5
+						rounded-xl
+						text-sm
+						text-slate-600
+						dark:text-slate-300
+						hover:bg-slate-100
+						dark:hover:bg-slate-800
+						hover:text-[#0A66C2]
+						transition-all
+						duration-200
+					"
+				>
+					<i 
+						class="fa-brands fa-linkedin-in text-xl w-6 text-center"
+						aria-hidden="true"
+					></i>
+
+					<span>LinkedIn</span>
+				</a>
+
+				<!-- Spotify -->
+				<a 
+					href="https://open.spotify.com/artist/30yquvMyEFLwI2RSlva8Uo?si=P8-wuZclQ0-pw8w8eF54Ig"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="Spotify"
+					class="
+					group
+						flex
+						items-center
+						gap-3
+						w-full
+						px-3
+						py-1.5
+						rounded-xl
+						text-sm
+						text-slate-600
+						dark:text-slate-300
+						hover:bg-slate-100
+						dark:hover:bg-slate-800
+						hover:text-green-500
+						transition-all
+						duration-200
+					"
+				>
+					<i 
+						class="fa-brands fa-spotify text-xl w-6 text-center"
+						aria-hidden="true"
+					></i>
+
+					<span class="group">
+						<span
+							class="
+								profile-highlight-value
+								font-bold
+								text-black-500
+								text-base
+								group-hover:text-green-500
+							">Dev</span><span
+							class="
+								profile-highlight-value
+								font-bold
+								text-amber-500
+								text-base
+								group-hover:text-green-500
+							">Junkie
+						</span>
+						on Spotify
+					</span>
+				</a>
+
+			</div>
+
+		</div>
             </div>
         </section>
         <!-- =====================================================
@@ -1635,16 +1809,7 @@
              ===================================================== -->
         <section
             id="vision"
-            class="
-                glass-card
-                p-5
-                sm:p-8
-                rounded-2xl
-                sm:rounded-3xl
-                space-y-6
-                border
-                border-sky-500/20
-            "
+            class="space-y-6 sm:space-y-8"
         >
             <div>
                 <span
@@ -2254,32 +2419,150 @@ if (printBtn) {
     );
 }
 /* =====================================================
-   NAVIGATION
+   NAVIGATION (one panel at a time)
    ===================================================== */
-document
-    .querySelectorAll('a[href^="#"]')
-    .forEach(link => {
-        link.addEventListener(
-            'click',
-            event => {
-                const targetId =
-                    link.getAttribute('href');
-                if (
-                    !targetId ||
-                    targetId === '#'
-                ) {
-                    return;
-                }
-                const target =
-                    document.querySelector(
-                        targetId
-                    );
-                if (!target) {
-                    return;
-                }
-            }
-        );
+const panelSections = Array.from(
+    document.querySelectorAll('#main-content > section')
+);
+const navSectionLinks = document.querySelectorAll(
+    '.nav-link, .mobile-nav-link, a[href^="#overview"]'
+);
+function scrollBehaviorForNav() {
+    return prefersReducedMotion ? 'auto' : 'smooth';
+}
+function goToPanel(target) {
+    if (!target) {
+        return;
+    }
+    target.scrollIntoView({
+        behavior: scrollBehaviorForNav(),
+        block: 'start'
     });
+    if (target.id) {
+        history.replaceState(
+            null,
+            '',
+            `#${target.id}`
+        );
+    }
+}
+function setActiveNav(sectionId) {
+    if (!sectionId) {
+        return;
+    }
+    const hash = `#${sectionId}`;
+    navSectionLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        const active = href === hash;
+        link.classList.toggle(
+            'nav-link-active',
+            active && link.classList.contains('nav-link')
+        );
+        link.classList.toggle(
+            'mobile-nav-link-active',
+            active &&
+                link.classList.contains('mobile-nav-link')
+        );
+        if (active) {
+            link.setAttribute('aria-current', 'page');
+        } else {
+            link.removeAttribute('aria-current');
+        }
+    });
+}
+navSectionLinks.forEach(link => {
+    link.addEventListener('click', event => {
+        const targetId = link.getAttribute('href');
+        if (!targetId || targetId === '#') {
+            return;
+        }
+        const target = document.querySelector(targetId);
+        if (!target || !target.matches('#main-content > section')) {
+            return;
+        }
+        event.preventDefault();
+        goToPanel(target);
+    });
+});
+if (panelSections.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (
+                    entry.isIntersecting &&
+                    entry.intersectionRatio >= 0.55
+                ) {
+                    setActiveNav(entry.target.id);
+                }
+            });
+        },
+        {
+            root: null,
+            threshold: [0.55, 0.75]
+        }
+    );
+    panelSections.forEach(section => {
+        observer.observe(section);
+    });
+}
+function panelAtScrollEdge(section, direction) {
+    const tolerance = 2;
+    if (direction > 0) {
+        return (
+            section.scrollTop + section.clientHeight >=
+            section.scrollHeight - tolerance
+        );
+    }
+    return section.scrollTop <= tolerance;
+}
+panelSections.forEach((section, index) => {
+    section.addEventListener(
+        'wheel',
+        event => {
+            if (event.ctrlKey) {
+                return;
+            }
+            const direction = Math.sign(event.deltaY);
+            if (!direction) {
+                return;
+            }
+            const atEdge = panelAtScrollEdge(
+                section,
+                direction
+            );
+            if (!atEdge) {
+                return;
+            }
+            const nextIndex =
+                index + (direction > 0 ? 1 : -1);
+            if (
+                nextIndex < 0 ||
+                nextIndex >= panelSections.length
+            ) {
+                return;
+            }
+            event.preventDefault();
+            goToPanel(panelSections[nextIndex]);
+        },
+        { passive: false }
+    );
+});
+const initialHash = window.location.hash;
+if (initialHash) {
+    const initialTarget = document.querySelector(
+        initialHash
+    );
+    if (
+        initialTarget &&
+        initialTarget.matches('#main-content > section')
+    ) {
+        requestAnimationFrame(() => {
+            goToPanel(initialTarget);
+        });
+    }
+} else if (panelSections[0]) {
+    setActiveNav(panelSections[0].id);
+}
 /* =====================================================
    DEVELOPER / ARTIFACT CONFIGURATION
    ===================================================== */
@@ -2347,16 +2630,27 @@ const ARTIFACT_TYPES = [
 ];
 const STICKMAN_SIZE = 58;
 const ARTIFACT_SIZE = 46;
-const FLOOR_MARGIN = 28;
-/*
- * Capture initial viewport height.
- * This becomes the permanent floor reference.
- */
-const staticFloorHeight =
-    window.innerHeight;
-const STATIC_FLOOR_Y =
-    staticFloorHeight -
-    FLOOR_MARGIN;
+const FLOOR_MARGIN_BASE = 28;
+function floorMargin() {
+    const footer =
+        document.querySelector(
+            '.site-footer'
+        );
+    if (!footer) {
+        return FLOOR_MARGIN_BASE;
+    }
+    const footerHeight =
+        footer.getBoundingClientRect()
+            .height;
+    return Math.max(
+        FLOOR_MARGIN_BASE,
+        Math.ceil(footerHeight) - 12
+    );
+}
+function groundLineY(height) {
+    const h = Math.max(1, height);
+    return h - floorMargin();
+}
 /* =====================================================
    PERFORMANCE
    ===================================================== */
@@ -2443,8 +2737,7 @@ function floorY(
     size
 ) {
     return (
-        height -
-        FLOOR_MARGIN -
+        groundLineY(height) -
         size / 2
     );
 }
@@ -2463,7 +2756,7 @@ function createDustParticle() {
         stickman.facing *
         (STICKMAN_SIZE * 0.28);
     const ground =
-        STATIC_FLOOR_Y;
+        groundLineY(canvasHeight);
     dustParticles.push({
         x:
             behindX +
@@ -3735,7 +4028,9 @@ function dropArtifacts() {
             ) + 1
         );
     const w =
-        window.innerWidth;
+        canvasWidth > 0
+            ? canvasWidth
+            : window.innerWidth;
     for (
         let i = 0;
         i < count;
@@ -3943,7 +4238,10 @@ function updateArtifacts(
     h
 ) {
     const ground =
-        STATIC_FLOOR_Y;
+        floorY(
+            h,
+            ARTIFACT_SIZE
+        );
     const stickmanReachY =
         floorY(
             h,
@@ -4210,9 +4508,7 @@ function render() {
         chomp--;
     }
     const groundLine =
-        h -
-        FLOOR_MARGIN +
-        2;
+        groundLineY(h) + 2;
     /* =================================================
        PROGRAMMING ARTIFACTS
        ================================================= */
@@ -4411,14 +4707,14 @@ function initDeveloperChase() {
     stickman.x =
         window.innerWidth *
         0.35;
+    resizeCanvas();
     stickman.y =
         floorY(
-            window.innerHeight,
+            canvasHeight,
             STICKMAN_SIZE
         );
     canvasInitialized =
         true;
-    resizeCanvas();
     /*
      * Keep your existing HTML button ID.
      */
@@ -4471,7 +4767,7 @@ function renderStaticStickman() {
         );
     drawShadow(
         stickman.x,
-        h - FLOOR_MARGIN + 2,
+        groundLineY(h) + 2,
         STICKMAN_SIZE * 0.42,
         7
     );
