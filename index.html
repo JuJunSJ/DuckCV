@@ -75,270 +75,163 @@
          ========================================================= -->
     <style>
         :root {
-            --site-chrome-top: calc(
-                5.5rem + env(safe-area-inset-top, 0px)
-            );
-            --site-chrome-bottom: calc(
-                2.75rem + env(safe-area-inset-bottom, 0px)
-            );
-            --panel-height: calc(
-                100svh - var(--site-chrome-top) - var(--site-chrome-bottom)
-            );
-        }
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: var(--site-chrome-top);
-        }
-        html.panel-scroll {
-            scroll-snap-type: y mandatory;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-        #main-content > section {
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            height: var(--panel-height);
-            min-height: var(--panel-height);
-            max-height: var(--panel-height);
-            overflow-x: hidden;
-            overflow-y: auto;
-            overscroll-behavior-y: contain;
-            -webkit-overflow-scrolling: touch;
-        }
-        section {
-            scroll-margin-top: var(--site-chrome-top);
-        }
-        .nav-link-active,
-        .mobile-nav-link-active {
-            background: rgb(241 245 249);
-            color: rgb(2 132 199);
-        }
-        .dark .nav-link-active,
-        .dark .mobile-nav-link-active {
-            background: rgb(30 41 59 / 0.6);
-            color: rgb(56 189 248);
-        }
-        #navbar {
-            padding-top: env(safe-area-inset-top, 0px);
-            padding-left: env(safe-area-inset-left, 0px);
-            padding-right: env(safe-area-inset-right, 0px);
-        }
-        #main-content {
-            padding-top: var(--site-chrome-top);
-            padding-bottom: var(--site-chrome-bottom);
-        }
-        .site-footer {
-            padding-bottom: max(
-                0.75rem,
-                env(safe-area-inset-bottom, 0px)
-            );
-            padding-left: max(
-                1rem,
-                env(safe-area-inset-left, 0px)
-            );
-            padding-right: max(
-                1rem,
-                env(safe-area-inset-right, 0px)
-            );
-        }
-        .nav-touch-target {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 2.75rem;
-            min-height: 2.75rem;
-        }
-        .profile-highlight-row {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.25rem;
-            align-items: start;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgb(226 232 240);
-        }
-        .dark .profile-highlight-row {
-            border-bottom-color: rgb(30 41 59);
-        }
-        .profile-highlight-row:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-        .profile-highlight-value {
-            font-weight: 600;
-            word-break: break-word;
-        }
-        @media (min-width: 640px) {
-            .profile-highlight-row {
-                grid-template-columns: 1fr auto;
-                gap: 1rem;
-            }
-            .profile-highlight-value {
-                text-align: right;
-            }
-        }
-        /*
-         * Safe viewport handling on modern mobile browsers.
-         */
-        .hero-height {
-            min-height: calc(100svh - 5rem);
-        }
-        /*
-         * =====================================================
-         * CANVAS
-         * =====================================================
-         */
-        #canvas-container {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            max-width: 100%;
-            height: 100svh;
-            height: 100dvh;
-            background: transparent;
-            pointer-events: none;
-            z-index: 20;
-            touch-action: none;
-            overflow: hidden;
-        }
-        #canvas-container canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-        }
-        /*
-         * =====================================================
-         * GLASS EFFECT
-         * =====================================================
-         *
-         * Solid fallback first, blur enhancement second.
-         * This prevents poor performance on browsers/devices
-         * where backdrop-filter is expensive or unavailable.
-         */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.94);
-            border: 1px solid rgba(229, 231, 235, 0.8);
-        }
-        .dark .glass-card {
-            background: rgba(15, 23, 42, 0.94);
-            border: 1px solid rgba(51, 65, 85, 0.6);
-        }
-        @supports (backdrop-filter: blur(12px)) {
-            .glass-card {
-                background: rgba(255, 255, 255, 0.75);
-                backdrop-filter: blur(12px);
-            }
-            .dark .glass-card {
-                background: rgba(15, 23, 42, 0.75);
-                backdrop-filter: blur(12px);
-            }
-        }
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.94);
-        }
-        .dark .glass-nav {
-            background: rgba(15, 23, 42, 0.94);
-        }
-        @supports (backdrop-filter: blur(16px)) {
-            .glass-nav {
-                background: rgba(255, 255, 255, 0.85);
-                backdrop-filter: blur(16px);
-            }
-            .dark .glass-nav {
-                background: rgba(15, 23, 42, 0.85);
-            }
-        }
-        /*
-         * =====================================================
-         * ACCESSIBILITY
-         * =====================================================
-         */
-        :focus-visible {
-            outline: 3px solid #38bdf8;
-            outline-offset: 3px;
-        }
-        /*
-         * =====================================================
-         * REDUCED MOTION
-         * =====================================================
-         */
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto !important;
-            }
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-        /*
-         * =====================================================
-         * SMALL MOBILE DEVICES
-         * =====================================================
-         */
-        @media (max-width: 480px) {
-            .glass-card {
-                border-radius: 1rem;
-            }
-            /*
-             * Reduce expensive blur on very small screens.
-             */
-            .glass-card,
-            .glass-nav {
-                backdrop-filter: none;
-            }
-        }
-        /*
-         * =====================================================
-         * PRINT
-         * =====================================================
-         */
-        @media print {
-            html {
-                scroll-behavior: auto !important;
-            }
-            #canvas-container,
-            .no-print,
-            nav,
-            footer {
-                display: none !important;
-            }
-            body {
-                background: white !important;
-                color: black !important;
-            }
-            main {
-                padding-top: 0 !important;
-                padding-bottom: 0 !important;
-                max-width: none !important;
-            }
-            .glass-card {
-                background: white !important;
-                border: 1px solid #ccc !important;
-                box-shadow: none !important;
-                backdrop-filter: none !important;
-            }
-            html.panel-scroll {
-                scroll-snap-type: none;
-            }
-            #main-content > section {
-                height: auto;
-                min-height: auto;
-                max-height: none;
-                overflow: visible;
-                scroll-snap-align: none;
-            }
-            section {
-                break-inside: avoid;
-                page-break-inside: avoid;
-            }
-        }
+    --site-chrome-top: calc(
+        4.25rem + env(safe-area-inset-top, 0px)
+    );
+
+    --site-chrome-bottom: calc(
+        2.75rem + env(safe-area-inset-bottom, 0px)
+    );
+
+    --panel-height: 100svh;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 0;
+}
+
+html.panel-scroll {
+    scroll-snap-type: y mandatory;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#canvas-container {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100svh;
+    height: 100dvh;
+    background: transparent;
+    pointer-events: none;
+    z-index: 20;
+    touch-action: none;
+    overflow: hidden;
+}
+
+#canvas-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+/*
+ * MAIN PAGE SCROLLER
+ */
+#main-content {
+    position: relative;
+    z-index: 10;
+
+    padding-top: 0;
+    padding-bottom: 0;
+
+    width: 100%;
+}
+
+/*
+ * ONE FULL-SCREEN PANEL
+ */
+#main-content > section {
+    position: relative;
+
+    box-sizing: border-box;
+
+    width: 100%;
+
+    height: var(--panel-height);
+    min-height: var(--panel-height);
+    max-height: none;
+
+    margin: 0;
+
+    padding-top: var(--site-chrome-top);
+    padding-bottom: var(--site-chrome-bottom);
+
+    overflow-x: hidden;
+    overflow-y: visible;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    /*
+     * Prevent content from visually leaking into
+     * the neighboring panel.
+     */
+    isolation: isolate;
+}
+
+/*
+ * Keep anchor navigation aligned below the fixed navbar.
+ */
+section {
+    scroll-margin-top: 0;
+}
+
+/*
+ * MOBILE
+ */
+@media (max-width: 767px) {
+    :root {
+        --site-chrome-top: calc(
+            4.25rem + env(safe-area-inset-top, 0px)
+        );
+
+        --site-chrome-bottom: calc(
+            2.75rem + env(safe-area-inset-bottom, 0px)
+        );
+    }
+
+    #main-content > section {
+        height: 100svh;
+        min-height: 100svh;
+
+        padding-top: var(--site-chrome-top);
+        padding-right: 1rem;
+        padding-bottom: var(--site-chrome-bottom);
+        padding-left: 1rem;
+
+        overflow: hidden;
+    }
+
+    /*
+     * HERO specifically.
+     */
+    #overview {
+        justify-content: flex-start;
+
+        padding-top: calc(
+            var(--site-chrome-top) + 0.75rem
+        );
+
+        padding-bottom: calc(
+            var(--site-chrome-bottom) + 0.5rem
+        );
+
+        overflow-y: auto;
+    }
+}
+
+/*
+ * Very small phones.
+ */
+@media (max-width: 480px) {
+    #overview {
+        padding-top: calc(
+            var(--site-chrome-top) + 0.5rem
+        );
+
+        padding-bottom: calc(
+            var(--site-chrome-bottom) + 0.5rem
+        );
+    }
+}
     </style>
     <!-- =========================================================
          THEME INITIALIZATION
@@ -714,16 +607,22 @@
         <!-- =====================================================
              HERO / OVERVIEW
              ===================================================== -->
-        <section
-            id="overview"
-            class="
-                flex
-                flex-col
-                justify-center
-                pt-4
-                sm:pt-8
-            "
-        >
+       <section
+			id="overview"
+			class="
+    w-28
+    h-28
+    sm:w-40
+    sm:h-40
+    lg:w-48
+    lg:h-48
+    object-cover
+    border-white/20
+    dark:border-slate-700
+    shadow-lg
+    shrink-0
+"
+		>
             <div
                 class="
                     grid
@@ -2547,6 +2446,88 @@ panelSections.forEach((section, index) => {
         { passive: false }
     );
 });
+
+/* =====================================================
+   MOBILE SWIPE NAVIGATION
+   ===================================================== */
+
+panelSections.forEach((section, index) => {
+    let touchStartY = 0;
+    let touchStartX = 0;
+
+    section.addEventListener(
+        'touchstart',
+        event => {
+            if (!event.touches.length) {
+                return;
+            }
+
+            touchStartY = event.touches[0].clientY;
+            touchStartX = event.touches[0].clientX;
+        },
+        { passive: true }
+    );
+
+    section.addEventListener(
+        'touchend',
+        event => {
+            if (!event.changedTouches.length) {
+                return;
+            }
+
+            const touch = event.changedTouches[0];
+
+            const deltaY =
+                touchStartY - touch.clientY;
+
+            const deltaX =
+                touchStartX - touch.clientX;
+
+            // Ignore mostly-horizontal swipes
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                return;
+            }
+
+            // Ignore small movements
+            const SWIPE_THRESHOLD = 50;
+
+            if (Math.abs(deltaY) < SWIPE_THRESHOLD) {
+                return;
+            }
+
+            const direction = deltaY > 0 ? 1 : -1;
+
+            // Only change panels when the current
+            // section is already at its scroll edge.
+            if (
+                !panelAtScrollEdge(
+                    section,
+                    direction
+                )
+            ) {
+                return;
+            }
+
+            const nextIndex =
+                index +
+                (direction > 0 ? 1 : -1);
+
+            if (
+                nextIndex < 0 ||
+                nextIndex >= panelSections.length
+            ) {
+                return;
+            }
+
+            goToPanel(
+                panelSections[nextIndex]
+            );
+        },
+        { passive: true }
+    );
+});
+
+
 const initialHash = window.location.hash;
 if (initialHash) {
     const initialTarget = document.querySelector(
@@ -2631,25 +2612,36 @@ const ARTIFACT_TYPES = [
 const STICKMAN_SIZE = 58;
 const ARTIFACT_SIZE = 46;
 const FLOOR_MARGIN_BASE = 28;
-function floorMargin() {
+function groundLineY(height) {
+    const h = Math.max(1, height);
     const footer =
         document.querySelector(
             '.site-footer'
         );
-    if (!footer) {
-        return FLOOR_MARGIN_BASE;
+    const container =
+        document.getElementById(
+            'canvas-container'
+        );
+    if (
+        footer &&
+        container
+    ) {
+        const containerRect =
+            container.getBoundingClientRect();
+        const footerTop =
+            footer.getBoundingClientRect()
+                .top;
+        const line =
+            footerTop -
+            containerRect.top;
+        if (
+            line > 0 &&
+            line <= h
+        ) {
+            return line;
+        }
     }
-    const footerHeight =
-        footer.getBoundingClientRect()
-            .height;
-    return Math.max(
-        FLOOR_MARGIN_BASE,
-        Math.ceil(footerHeight) - 12
-    );
-}
-function groundLineY(height) {
-    const h = Math.max(1, height);
-    return h - floorMargin();
+    return h - FLOOR_MARGIN_BASE;
 }
 /* =====================================================
    PERFORMANCE
